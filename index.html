@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hành Trình 1194 Ngày Yêu</title>
+    <style>
+        :root { --primary: #ff4d6d; --bg-day: #ffafbd; --bg-night: #05070a; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            height: 100vh; display: flex; justify-content: center; align-items: center; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            overflow: hidden; transition: 1.5s; background: var(--bg-night);
+        }
+
+        canvas { position: absolute; top: 0; left: 0; z-index: 1; pointer-events: none; }
+
+        /* Màn hình khóa bảo mật */
+        #lock {
+            position: fixed; inset: 0; background: #05070a; z-index: 1000;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .lock-content { text-align: center; }
+        input { 
+            padding: 15px; border-radius: 15px; border: 2px solid var(--primary); 
+            background: rgba(255,255,255,0.05); color: white; text-align: center; 
+            margin: 20px; width: 240px; font-size: 20px; outline: none;
+            box-shadow: 0 0 15px rgba(255, 77, 109, 0.2);
+        }
+
+        /* Thẻ nội dung chính (Glassmorphism) */
+        .card {
+            position: relative; z-index: 10; width: 90%; max-width: 420px;
+            padding: 40px 25px; background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            border-radius: 40px; border: 1px solid rgba(255,255,255,0.15);
+            text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .days { 
+            font-size: 13px; font-weight: bold; color: var(--primary); 
+            letter-spacing: 4px; text-transform: uppercase; margin-bottom: 10px;
+        }
+
+        .slider { 
+            width: 100%; height: 220px; border-radius: 25px; 
+            margin: 20px 0; overflow: hidden; position: relative; 
+            background: rgba(0,0,0,0.2); border: 1px solid rgba(255,77,109,0.3);
+        }
+        .slide { 
+            position: absolute; inset: 0; opacity: 0; transition: 1.5s; 
+            display: flex; align-items: center; justify-content: center; font-size: 70px;
+        }
+        .slide.active { opacity: 1; transform: scale(1.05); }
+
+        h1 { font-size: 1.7rem; margin: 15px 0; color: white; text-shadow: 0 0 10px var(--primary); }
+        .quote { font-size: 15px; color: rgba(255,255,255,0.9); min-height: 60px; line-height: 1.6; font-style: italic; }
+
+        .btn-group { display: flex; justify-content: center; gap: 20px; margin-top: 30px; height: 50px; position: relative; }
+        .btn { 
+            padding: 12px 30px; border-radius: 30px; border: none; 
+            font-weight: 900; cursor: pointer; transition: 0.4s; text-transform: uppercase;
+        }
+        #yes { background: var(--primary); color: white; box-shadow: 0 8px 20px rgba(255, 77, 109, 0.4); }
+        #no { background: rgba(255,255,255,0.2); color: white; position: absolute; left: 60%; }
+    </style>
+</head>
+<body>
+
+    <canvas id="canvas"></canvas>
+
+    <div id="lock">
+        <div class="lock-content">
+            <h2 style="color: var(--primary); letter-spacing: 2px;">PASSWORD</h2>
+            <p style="color: #666; font-size: 14px; margin-top: 5px;">Nhập ngày kỷ niệm (21012023)</p>
+            <input type="password" id="entry" placeholder="DDMMYYYY">
+            <br>
+            <button class="btn" id="yes" onclick="check()">Mở Khóa ❤️</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="days" id="daysCounter">HÀNH TRÌNH 1194 NGÀY</div>
+        <div class="slider">
+            <div class="slide active">📸</div>
+            <div class="slide">💑</div>
+            <div class="slide">💖</div>
+            <div class="slide">🌹</div>
+        </div>
+        <h1 id="mainTitle">Ngủ Ngon Nhé!</h1>
+        <p class="quote" id="mainMsg">Đang tải lời nhắn yêu thương...</p>
+        <div class="btn-group">
+            <button class="btn" id="yes" onclick="finish()">Đồng ý ❤️</button>
+            <button class="btn" id="no" onmouseover="run()" onclick="run()">Không</button>
+        </div>
+    </div>
+
+    <script>
+        const START = new Date('2023-01-21'); 
+        const PASS = "21012023";
+
+        function check() {
+            if(document.getElementById('entry').value === PASS) {
+                const l = document.getElementById('lock');
+                l.style.opacity = '0';
+                l.style.transform = 'scale(1.1)';
+                setTimeout(() => { l.style.display = 'none'; startApp(); }, 600);
+            } else { alert("Nhập sai rồi cục vàng ơi! ❌"); }
+        }
+
+        function startApp() {
+            const h = new Date().getHours();
+            const isDay = h >= 5 && h < 18;
+            
+            // Tự động nhận diện Ngày/Đêm
+            document.body.style.background = isDay 
+                ? "radial-gradient(circle at top, #ff9a9e, #fad0c4)" 
+                : "radial-gradient(circle at bottom, #0f0c29, #302b63)";
+
+            document.getElementById('mainTitle').innerText = isDay ? "Chào Ngày Mới, Bé Yêu!" : "Ngủ Ngon Nhé Bé!";
+            
+            const nightMsg = "Trong hàng vạn dòng code anh viết, em là đoạn mã đẹp nhất đời anh. 1194 ngày qua cảm ơn em đã luôn ở đây. Ngủ ngon nhé!";
+            const dayMsg = "Chúc cục vàng một ngày mới tràn đầy niềm vui. Đừng quên là có một người luôn yêu em hơn tất cả nhé! ☀️";
+            
+            document.getElementById('mainMsg').innerText = isDay ? dayMsg : nightMsg;
+
+            // Đếm ngày yêu chính xác
+            const totalDays = Math.floor((new Date() - START) / 86400000);
+            document.getElementById('daysCounter').innerText = `HÀNH TRÌNH ${totalDays} NGÀY YÊU`;
+
+            // Slider ảnh mượt
+            let c = 0;
+            const s = document.querySelectorAll('.slide');
+            setInterval(() => {
+                s[c].classList.remove('active');
+                c = (c + 1) % s.length;
+                s[c].classList.add('active');
+            }, 3500);
+
+            initCanvas();
+        }
+
+        function initCanvas() {
+            const cv = document.getElementById('canvas');
+            const ctx = cv.getContext('2d');
+            cv.width = window.innerWidth; cv.height = window.innerHeight;
+            const p = [];
+            for(let i=0; i<60; i++) p.push({x: Math.random()*cv.width, y: Math.random()*cv.height, r: Math.random()*2, v: Math.random()*0.6});
+            function draw() {
+                ctx.clearRect(0,0,cv.width,cv.height);
+                ctx.fillStyle = "rgba(255,255,255,0.4)";
+                p.forEach(i => { i.y -= i.v; if(i.y<0) i.y=cv.height; ctx.beginPath(); ctx.arc(i.x,i.y,i.r,0,Math.PI*2); ctx.fill(); });
+                requestAnimationFrame(draw);
+            }
+            draw();
+        }
+
+        function run() {
+            const b = document.getElementById('no');
+            b.style.position = 'fixed';
+            b.style.left = Math.random()*80 + '%';
+            b.style.top = Math.random()*80 + '%';
+        }
+
+        function finish() {
+            if(navigator.vibrate) navigator.vibrate([100, 50, 100, 50, 300]);
+            document.getElementById('mainTitle').innerText = "Yêu Em Nhất Đời! 💖";
+            document.getElementById('mainMsg').innerText = "1194 ngày và mãi mãi về sau... Anh ước mình là tấm chăn ấm ôm lấy em đêm nay. Ngủ ngon nhé cục vàng!";
+            document.querySelectorAll('.btn').forEach(b => b.style.display = 'none');
+            
+            // Hiệu ứng pháo hoa thủ công HD
+            const cv = document.getElementById('canvas');
+            const ctx = cv.getContext('2d');
+            for(let i=0; i<150; i++) {
+                const color = `hsl(${Math.random()*360}, 100%, 75%)`;
+                const x = cv.width/2, y = cv.height/2;
+                const vx = (Math.random()-0.5)*18, vy = (Math.random()-0.5)*18;
+                let life = 120;
+                function fire() {
+                    if(life <= 0) return;
+                    ctx.fillStyle = color;
+                    ctx.beginPath(); ctx.arc(x+(120-life)*vx, y+(120-life)*vy, 2.5, 0, Math.PI*2); ctx.fill();
+                    life--; requestAnimationFrame(fire);
+                }
+                fire();
+            }
+        }
+    </script>
+</body>
+</html>
