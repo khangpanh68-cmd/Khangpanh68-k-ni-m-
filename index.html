@@ -2,196 +2,260 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hành Trình 1194 Ngày Yêu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Eternal Love v15.0 - Ultra Experience</title>
     <style>
-        :root { --primary: #ff4d6d; --bg-day: #ffafbd; --bg-night: #05070a; }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;500;700&display=swap');
+
+        :root {
+            --primary: #ff4d6d;
+            --glass: rgba(255, 255, 255, 0.1);
+            --bg-dark: #0a0a0a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { 
-            height: 100vh; display: flex; justify-content: center; align-items: center; 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            overflow: hidden; transition: 1.5s; background: var(--bg-night);
+            height: 100vh; font-family: 'Quicksand', sans-serif; background: var(--bg-dark); 
+            color: white; overflow: hidden; display: flex; justify-content: center; align-items: center;
         }
 
-        canvas { position: absolute; top: 0; left: 0; z-index: 1; pointer-events: none; }
+        canvas { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
 
-        /* Màn hình khóa bảo mật */
+        /* Màn hình khóa tinh xảo */
         #lock {
-            position: fixed; inset: 0; background: #05070a; z-index: 1000;
+            position: fixed; inset: 0; background: var(--bg-dark); z-index: 2000;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            transition: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: 1.5s cubic-bezier(1, 0, 0, 1);
         }
-        .lock-content { text-align: center; }
+        .lock-box { text-align: center; padding: 40px; background: var(--glass); border-radius: 40px; backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); }
         input { 
-            padding: 15px; border-radius: 15px; border: 2px solid var(--primary); 
-            background: rgba(255,255,255,0.05); color: white; text-align: center; 
-            margin: 20px; width: 240px; font-size: 20px; outline: none;
-            box-shadow: 0 0 15px rgba(255, 77, 109, 0.2);
+            width: 220px; padding: 15px; border-radius: 15px; border: none; background: rgba(255,255,255,0.05); 
+            color: white; font-size: 24px; text-align: center; letter-spacing: 5px; outline: none; margin: 20px 0;
         }
 
-        /* Thẻ nội dung chính (Glassmorphism) */
-        .card {
-            position: relative; z-index: 10; width: 90%; max-width: 420px;
-            padding: 40px 25px; background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
-            border-radius: 40px; border: 1px solid rgba(255,255,255,0.15);
-            text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-            animation: float 6s ease-in-out infinite;
+        /* Thẻ nội dung chính */
+        .main-container {
+            position: relative; z-index: 10; width: 92%; max-width: 400px;
+            padding: 40px 25px; border-radius: 45px; background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(40px); border: 1px solid rgba(255,255,255,0.15);
+            text-align: center; display: none; opacity: 0; transform: scale(0.9);
+            transition: 1s cubic-bezier(0.2, 1, 0.2, 1);
+        }
+        .main-container.visible { opacity: 1; transform: scale(1); display: block; }
+
+        /* Heartbeat Timeline Popup */
+        #timelinePopup {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 3000;
+            display: none; padding: 40px 20px; overflow-y: auto;
+        }
+        .milestone { margin-bottom: 30px; border-left: 2px solid var(--primary); padding-left: 20px; text-align: left; }
+        .milestone h4 { color: var(--primary); font-size: 14px; }
+        .milestone p { font-size: 16px; margin-top: 5px; }
+
+        /* Sound Control */
+        #soundToggle {
+            position: fixed; top: 20px; right: 20px; z-index: 100;
+            width: 40px; height: 40px; border-radius: 50%; background: var(--glass);
+            display: flex; align-items: center; justify-content: center; cursor: pointer;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
-
-        .days { 
-            font-size: 13px; font-weight: bold; color: var(--primary); 
-            letter-spacing: 4px; text-transform: uppercase; margin-bottom: 10px;
-        }
-
-        .slider { 
-            width: 100%; height: 220px; border-radius: 25px; 
-            margin: 20px 0; overflow: hidden; position: relative; 
-            background: rgba(0,0,0,0.2); border: 1px solid rgba(255,77,109,0.3);
-        }
-        .slide { 
-            position: absolute; inset: 0; opacity: 0; transition: 1.5s; 
-            display: flex; align-items: center; justify-content: center; font-size: 70px;
-        }
-        .slide.active { opacity: 1; transform: scale(1.05); }
-
-        h1 { font-size: 1.7rem; margin: 15px 0; color: white; text-shadow: 0 0 10px var(--primary); }
-        .quote { font-size: 15px; color: rgba(255,255,255,0.9); min-height: 60px; line-height: 1.6; font-style: italic; }
-
-        .btn-group { display: flex; justify-content: center; gap: 20px; margin-top: 30px; height: 50px; position: relative; }
-        .btn { 
-            padding: 12px 30px; border-radius: 30px; border: none; 
-            font-weight: 900; cursor: pointer; transition: 0.4s; text-transform: uppercase;
-        }
-        #yes { background: var(--primary); color: white; box-shadow: 0 8px 20px rgba(255, 77, 109, 0.4); }
-        #no { background: rgba(255,255,255,0.2); color: white; position: absolute; left: 60%; }
+        /* UI Elements */
+        .days-counter { cursor: pointer; display: inline-block; padding: 10px 20px; border-radius: 30px; background: var(--primary); font-weight: 700; margin-bottom: 20px; box-shadow: 0 10px 20px rgba(255, 77, 109, 0.3); }
+        .quote { font-style: italic; opacity: 0.9; line-height: 1.6; min-height: 60px; margin: 20px 0; }
+        .weather-tag { font-size: 12px; background: rgba(255,255,255,0.1); padding: 5px 12px; border-radius: 20px; margin-bottom: 10px; display: inline-block; }
+        .time-capsule { display: none; background: linear-gradient(45deg, #ffd700, #ff4d6d); padding: 15px; border-radius: 20px; margin-top: 20px; font-weight: 700; animation: pulse 2s infinite; cursor: pointer; }
+        
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+        .btn { padding: 15px 40px; border-radius: 100px; border: none; font-weight: 700; cursor: pointer; transition: 0.3s; margin-top: 20px; }
+        .btn-yes { background: white; color: black; }
     </style>
 </head>
 <body>
 
-    <canvas id="canvas"></canvas>
+    <div id="soundToggle" onclick="toggleMusic()">🔇</div>
+    <canvas id="bgCanvas"></canvas>
 
     <div id="lock">
-        <div class="lock-content">
-            <h2 style="color: var(--primary); letter-spacing: 2px;">PASSWORD</h2>
-            <p style="color: #666; font-size: 14px; margin-top: 5px;">Nhập ngày kỷ niệm (21012023)</p>
-            <input type="password" id="entry" placeholder="DDMMYYYY">
+        <div class="lock-box">
+            <h2 style="letter-spacing: 5px; font-weight: 300;">Mở Khoá Ngày Kỉ Niệm</h2>
+            <input type="password" id="passInput" placeholder="21012023" maxlength="8">
             <br>
-            <button class="btn" id="yes" onclick="check()">Mở Khóa ❤️</button>
+            <button class="btn btn-yes" onclick="unlock()">Mở Khoá ♥️💍</button>
         </div>
     </div>
 
-    <div class="card">
-        <div class="days" id="daysCounter">HÀNH TRÌNH 1194 NGÀY</div>
-        <div class="slider">
-            <div class="slide active">📸</div>
-            <div class="slide">💑</div>
-            <div class="slide">💖</div>
-            <div class="slide">🌹</div>
+    <div class="main-container" id="mainApp">
+        <div class="weather-tag" id="weatherInfo">Đang cập nhật thời tiết...</div>
+        <br>
+        <div class="days-counter" onclick="showTimeline()" id="daysDisplay">HÀNH TRÌNH ❤️</div>
+        
+        <div id="mainEmoji" style="font-size: 80px; margin: 20px;">💖</div>
+        <h1 id="titleDisplay" style="font-size: 24px; margin-bottom: 10px;">Chào bé yêu!</h1>
+        <p class="quote" id="msgDisplay">...</p>
+
+        <div id="capsuleArea" class="time-capsule" onclick="openCapsule()">
+            🎁 THƯ TỪ QUÁ KHỨ (BẤM ĐỂ MỞ)
         </div>
-        <h1 id="mainTitle">Ngủ Ngon Nhé!</h1>
-        <p class="quote" id="mainMsg">Đang tải lời nhắn yêu thương...</p>
-        <div class="btn-group">
-            <button class="btn" id="yes" onclick="finish()">Đồng ý ❤️</button>
-            <button class="btn" id="no" onmouseover="run()" onclick="run()">Không</button>
-        </div>
+
+        <button class="btn btn-yes" onclick="celebrate()">Yêu anh ❤️</button>
+        <p style="font-size: 10px; margin-top: 20px; opacity: 0.5;">Lắc nhẹ điện thoại để nhận quẻ thăm may mắn!</p>
     </div>
+
+    <div id="timelinePopup" onclick="this.style.display='none'">
+        <h2 style="text-align: center; margin-bottom: 30px;">Dòng Thời Gian Nhịp Đập</h2>
+        <div class="milestone"><h4>21/01/2023</h4><p>Ngày đầu tiên mình gọi nhau là "Người yêu" ❤️</p></div>
+        <div class="milestone"><h4>14/02/2023</h4><p>Valentine đầu tiên đầy lãng mạn 🌹</p></div>
+        <div class="milestone"><h4>21/01/2024</h4><p>Tròn 1 năm bên nhau hạnh phúc 🎂</p></div>
+        <div class="milestone"><h4>HÔM NAY</h4><p>Vẫn là ngày anh yêu em nhiều nhất 💎</p></div>
+        <p style="text-align: center; opacity: 0.5;">(Bấm bất kỳ đâu để đóng)</p>
+    </div>
+
+    <audio id="bgMusic" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
 
     <script>
-        const START = new Date('2023-01-21'); 
+        const LOVE_DATE = new Date('2023-01-21');
+        const CAPSULE_DATE = new Date('2027-01-21');
         const PASS = "21012023";
+        let isMusicPlaying = false;
 
-        function check() {
-            if(document.getElementById('entry').value === PASS) {
-                const l = document.getElementById('lock');
-                l.style.opacity = '0';
-                l.style.transform = 'scale(1.1)';
-                setTimeout(() => { l.style.display = 'none'; startApp(); }, 600);
-            } else { alert("Nhập sai rồi cục vàng ơi! ❌"); }
+        // 1. Mở khóa và Khởi tạo âm thanh
+        function unlock() {
+            if(document.getElementById('passInput').value === PASS) {
+                document.getElementById('lock').style.transform = 'translateY(-100%)';
+                const app = document.getElementById('mainApp');
+                app.style.display = 'block';
+                setTimeout(() => app.classList.add('visible'), 100);
+                
+                // Khởi động các tính năng
+                initLogic();
+                initShake();
+                getWeather();
+                initCanvas();
+            } else {
+                alert("Nhập sai pass rồi bé iu ơi!");
+            }
         }
 
-        function startApp() {
-            const h = new Date().getHours();
-            const isDay = h >= 5 && h < 18;
+        // 2. Logic Thời gian & Thư gửi tương lai
+        function initLogic() {
+            const now = new Date();
+            const diff = Math.floor((now - LOVE_DATE) / 86400000);
+            document.getElementById('daysDisplay').innerText = `HÀNH TRÌNH ${diff} NGÀY`;
+
+            // Kiểm tra Time Capsule
+            if (now >= CAPSULE_DATE) {
+                document.getElementById('capsuleArea').style.display = 'block';
+            }
+
+            const hrs = now.getHours();
+            let title = "", msg = "";
+            if(hrs < 12) { title = "Chào buổi sáng bé!"; msg = "Chúc cục vàng một ngày mới rạng rỡ như chính nụ cười của em vậy."; }
+            else if(hrs < 18) { title = "Chiều ấm áp nha!"; msg = "Anh đang nhớ em rất nhiều, em làm việc có mệt không?"; }
+            else { title = "Chúc bé ngủ ngon!"; msg = "Gác lại âu lo và chìm vào giấc ngủ thật êm đềm nhé công chúa."; }
             
-            // Tự động nhận diện Ngày/Đêm
-            document.body.style.background = isDay 
-                ? "radial-gradient(circle at top, #ff9a9e, #fad0c4)" 
-                : "radial-gradient(circle at bottom, #0f0c29, #302b63)";
+            document.getElementById('titleDisplay').innerText = title;
+            document.getElementById('msgDisplay').innerText = msg;
+        }
 
-            document.getElementById('mainTitle').innerText = isDay ? "Chào Ngày Mới, Bé Yêu!" : "Ngủ Ngon Nhé Bé!";
-            
-            const nightMsg = "Trong hàng vạn dòng code anh viết, em là đoạn mã đẹp nhất đời anh. 1194 ngày qua cảm ơn em đã luôn ở đây. Ngủ ngon nhé!";
-            const dayMsg = "Chúc cục vàng một ngày mới tràn đầy niềm vui. Đừng quên là có một người luôn yêu em hơn tất cả nhé! ☀️";
-            
-            document.getElementById('mainMsg').innerText = isDay ? dayMsg : nightMsg;
+        // 3. Âm thanh ký ức
+        function toggleMusic() {
+            const m = document.getElementById('bgMusic');
+            const btn = document.getElementById('soundToggle');
+            if(!isMusicPlaying) {
+                m.play(); btn.innerText = "🔊"; isMusicPlaying = true;
+            } else {
+                m.pause(); btn.innerText = "🔇"; isMusicPlaying = false;
+            }
+        }
 
-            // Đếm ngày yêu chính xác
-            const totalDays = Math.floor((new Date() - START) / 86400000);
-            document.getElementById('daysCounter').innerText = `HÀNH TRÌNH ${totalDays} NGÀY YÊU`;
+        // 4. Lắc để nhận may mắn
+        function initShake() {
+            if (typeof DeviceMotionEvent.requestPermission === 'function') {
+                // iPhone yêu cầu quyền
+                window.addEventListener('click', () => {
+                    DeviceMotionEvent.requestPermission();
+                }, {once: true});
+            }
 
-            // Slider ảnh mượt
-            let c = 0;
-            const s = document.querySelectorAll('.slide');
-            setInterval(() => {
-                s[c].classList.remove('active');
-                c = (c + 1) % s.length;
-                s[c].classList.add('active');
-            }, 3500);
+            let lastX, lastY, lastZ;
+            let threshold = 15;
 
-            initCanvas();
+            window.addEventListener('devicemotion', (e) => {
+                let acc = e.accelerationIncludingGravity;
+                if(!acc.x) return;
+                
+                let delta = Math.abs(acc.x + acc.y + acc.z - lastX - lastY - lastZ);
+                if (delta > threshold) {
+                    const lucks = [
+                        "Hôm nay bé sẽ được anh hôn 100 cái! 😘",
+                        "Quẻ phán: Chiều nay anh sẽ dẫn bé đi ăn món bé thích! 🍕",
+                        "Bé là người xinh đẹp nhất thế giới hôm nay! ✨",
+                        "May mắn của bé hôm nay: Anh yêu bé nhiều gấp đôi! ❤️"
+                    ];
+                    alert(lucks[Math.floor(Math.random()*lucks.length)]);
+                }
+                lastX = acc.x; lastY = acc.y; lastZ = acc.z;
+            });
+        }
+
+        // 5. Thời tiết tâm trạng (Giả lập hoặc dùng API thực)
+        async function getWeather() {
+            // Thay 'YOUR_API_KEY' bằng key thực tế từ OpenWeatherMap
+            const API_KEY = 'YOUR_API_KEY'; 
+            const CITY = 'Saigon';
+            try {
+                // Ở đây mình giả lập để bạn thấy hiệu ứng ngay
+                const status = ["mưa", "nắng", "mây"][Math.floor(Math.random()*3)];
+                let weatherTxt = "";
+                if(status === "mưa") weatherTxt = "Trời đang mưa rồi, bé nhớ che ô và giữ ấm nhé. Anh muốn là chiếc ô che cho em. 🌧️";
+                else if(status === "nắng") weatherTxt = "Trời nắng đẹp, đi uống trà sữa cho mát không bé iu? ☀️";
+                else weatherTxt = "Trời dịu mát, rất thích hợp để nắm tay anh đi dạo đó! ☁️";
+                
+                document.getElementById('weatherInfo').innerText = weatherTxt;
+            } catch (e) {
+                document.getElementById('weatherInfo').innerText = "Luôn yêu em bất kể thời tiết! ❤️";
+            }
+        }
+
+        function showTimeline() { document.getElementById('timelinePopup').style.display = 'block'; }
+
+        function openCapsule() {
+            alert("Thư từ 2023 gửi bé: 'Chào em của tương lai, dù bao nhiêu năm trôi qua, hy vọng nụ cười của em vẫn rạng rỡ và tay mình vẫn nắm chặt như ngày đầu...'");
+        }
+
+        // Hiệu ứng pháo hoa
+        function celebrate() {
+            const cv = document.getElementById('bgCanvas');
+            const ctx = cv.getContext('2d');
+            for(let i=0; i<10; i++) {
+                setTimeout(() => {
+                    const x = Math.random()*cv.width, y = Math.random()*cv.height;
+                    const color = `hsl(${Math.random()*360}, 100%, 70%)`;
+                    for(let j=0; j<30; j++) {
+                        let vx = (Math.random()-0.5)*15, vy = (Math.random()-0.5)*15, l = 50;
+                        function f() { if(l<=0) return; ctx.fillStyle = color; ctx.beginPath(); ctx.arc(x+(50-l)*vx, y+(50-l)*vy, 2, 0, 7); ctx.fill(); l--; requestAnimationFrame(f); }
+                        f();
+                    }
+                }, i*200);
+            }
+            alert("Anh yêu em nhất trên đời!");
         }
 
         function initCanvas() {
-            const cv = document.getElementById('canvas');
+            const cv = document.getElementById('bgCanvas');
             const ctx = cv.getContext('2d');
             cv.width = window.innerWidth; cv.height = window.innerHeight;
-            const p = [];
-            for(let i=0; i<60; i++) p.push({x: Math.random()*cv.width, y: Math.random()*cv.height, r: Math.random()*2, v: Math.random()*0.6});
-            function draw() {
+            const pts = [];
+            for(let i=0; i<50; i++) pts.push({x: Math.random()*cv.width, y: Math.random()*cv.height, r: Math.random()*2, v: Math.random()*0.5+0.1});
+            function anim() {
                 ctx.clearRect(0,0,cv.width,cv.height);
-                ctx.fillStyle = "rgba(255,255,255,0.4)";
-                p.forEach(i => { i.y -= i.v; if(i.y<0) i.y=cv.height; ctx.beginPath(); ctx.arc(i.x,i.y,i.r,0,Math.PI*2); ctx.fill(); });
-                requestAnimationFrame(draw);
+                ctx.fillStyle = "rgba(255,255,255,0.2)";
+                pts.forEach(p => { p.y -= p.v; if(p.y < 0) p.y = cv.height; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 7); ctx.fill(); });
+                requestAnimationFrame(anim);
             }
-            draw();
-        }
-
-        function run() {
-            const b = document.getElementById('no');
-            b.style.position = 'fixed';
-            b.style.left = Math.random()*80 + '%';
-            b.style.top = Math.random()*80 + '%';
-        }
-
-        function finish() {
-            if(navigator.vibrate) navigator.vibrate([100, 50, 100, 50, 300]);
-            document.getElementById('mainTitle').innerText = "Yêu Em Nhất Đời! 💖";
-            document.getElementById('mainMsg').innerText = "1194 ngày và mãi mãi về sau... Anh ước mình là tấm chăn ấm ôm lấy em đêm nay. Ngủ ngon nhé cục vàng!";
-            document.querySelectorAll('.btn').forEach(b => b.style.display = 'none');
-            
-            // Hiệu ứng pháo hoa thủ công HD
-            const cv = document.getElementById('canvas');
-            const ctx = cv.getContext('2d');
-            for(let i=0; i<150; i++) {
-                const color = `hsl(${Math.random()*360}, 100%, 75%)`;
-                const x = cv.width/2, y = cv.height/2;
-                const vx = (Math.random()-0.5)*18, vy = (Math.random()-0.5)*18;
-                let life = 120;
-                function fire() {
-                    if(life <= 0) return;
-                    ctx.fillStyle = color;
-                    ctx.beginPath(); ctx.arc(x+(120-life)*vx, y+(120-life)*vy, 2.5, 0, Math.PI*2); ctx.fill();
-                    life--; requestAnimationFrame(fire);
-                }
-                fire();
-            }
+            anim();
         }
     </script>
 </body>
