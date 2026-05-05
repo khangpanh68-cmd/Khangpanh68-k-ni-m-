@@ -1,19 +1,19 @@
-# 🚀 Infinite Love 2026 - Ultra Fast Deployment
+# 🚀 SUPREME LOVE 2026 - Ultra Fast Deployment
 # Thiết kế riêng cho project của Khang & Phương Anh
-name: Deploy Infinite Love 2026
+name: Deploy Supreme Love 2026
 
 on:
   push:
     branches: ["main"] # Tự động chạy khi bạn nhấn 'Commit' trên nhánh main
   workflow_dispatch:      # Cho phép bạn nhấn nút chạy thủ công nếu cần
 
-# Thiết lập quyền hạn tối thiểu để bảo mật
+# Thiết lập quyền hạn tối thiểu để bảo mật và vận hành
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Đảm bảo chỉ có một tiến trình chạy tại một thời điểm
+# Đảm bảo chỉ có một tiến trình chạy tại một thời điểm (Tránh xung đột)
 concurrency:
   group: "pages"
   cancel-in-progress: false
@@ -29,12 +29,12 @@ jobs:
         uses: actions/checkout@v4
 
       - name: 🌐 Setup GitHub Pages
-        uses: actions/configure-pages@v4
+        uses: actions/configure-pages@v5
 
-      - name: 📦 Upload Artifacts
+      - name: 📦 Upload Web Artifacts
         uses: actions/upload-pages-artifact@v3
         with:
-          # Deploy toàn bộ thư mục hiện tại (chứa file index.html)
+          # Triển khai toàn bộ thư mục hiện tại (chứa file index.html)
           path: '.'
 
       - name: 🚀 Deploy to GitHub Pages
@@ -43,5 +43,5 @@ jobs:
 
       - name: ✨ Deployment Status
         run: |
-          echo "Thiên đình báo tin: Vũ trụ của Phương Anh đã online!"
+          echo "Thiên đình báo tin: Vũ trụ của Phương Anh đã Online!"
           echo "Địa chỉ truy cập: ${{ steps.deployment.outputs.page_url }}"
