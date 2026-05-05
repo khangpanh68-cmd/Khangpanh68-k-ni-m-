@@ -3,217 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>INFINITE LOVE | KHANG ❤️ PHƯƠNG ANH</title>
+    <title>SUPREME LOVE 2026 | VĨNH LONG ❤️ TP.HCM</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Orbitron:wght@400;900&family=Quicksand:wght@300;600&display=swap" rel="stylesheet">
     
     <style>
-        :root {
-            --gold: #fcc201;
-            --premium-red: #800f2f;
-            --royal-pink: #ff4d6d;
-            --deep-space: #050505;
-        }
-
+        :root { --gold: #fcc201; --pink: #ff4d6d; --red: #800f2f; --ultra-hd: #00f2ff; }
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { height: 100vh; background: var(--deep-space); overflow: hidden; font-family: 'Quicksand', sans-serif; color: white; touch-action: none; }
+        body { height: 100vh; background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%); overflow: hidden; font-family: 'Quicksand', sans-serif; color: white; }
 
-        /* HIỆU ỨNG CHẠM (MAGIC RIPPLE) */
-        .ripple {
-            position: absolute; border-radius: 50%; background: rgba(255, 255, 255, 0.4);
-            transform: scale(0); animation: ripple-effect 0.8s linear; pointer-events: none; z-index: 9999;
+        /* 📡 RADAR VỆ TINH VĨNH LONG - TP.HCM */
+        .radar-container {
+            width: 95%; max-width: 450px; height: 220px; margin: 15px auto;
+            background: rgba(0, 0, 0, 0.8); border: 2px solid var(--ultra-hd);
+            border-radius: 30px; position: relative; overflow: hidden;
+            box-shadow: 0 0 40px rgba(0, 242, 255, 0.3);
         }
-        @keyframes ripple-effect { to { transform: scale(4); opacity: 0; } }
-        .floating-icon {
-            position: absolute; pointer-events: none; z-index: 9998;
-            animation: float-up 1s ease-out forwards; font-size: 1.5rem;
-        }
-        @keyframes float-up { to { transform: translateY(-100px) rotate(360deg); opacity: 0; } }
+        .map-overlay { position: absolute; inset: 0; opacity: 0.3; background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png'); }
+        .marker { position: absolute; width: 12px; height: 12px; border-radius: 50%; z-index: 5; }
+        .vinh-long { top: 70%; left: 35%; background: var(--gold); box-shadow: 0 0 20px var(--gold); }
+        .tp-hcm { top: 40%; left: 65%; background: var(--pink); box-shadow: 0 0 20px var(--pink); }
+        .label { position: absolute; font-family: 'Orbitron'; font-size: 0.6rem; color: white; white-space: nowrap; }
+        .laser-line { position: absolute; height: 2px; background: linear-gradient(90deg, var(--gold), var(--pink)); box-shadow: 0 0 15px var(--ultra-hd); transform-origin: left center; z-index: 4; animation: beam 2s infinite; }
 
-        /* GATE & PASSWORD */
-        #gate {
-            position: fixed; inset: 0; background: black; z-index: 10000;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            transition: 2s cubic-bezier(1, 0, 0, 1);
-        }
-        .pass-input {
-            background: none; border: none; border-bottom: 2px solid var(--gold);
-            color: var(--gold); font-family: 'Orbitron'; text-align: center;
-            font-size: 1.5rem; width: 200px; margin-bottom: 20px; outline: none;
-        }
+        /* ⏰ ĐỒNG HỒ & NGÀY THÁNG VIP (NEW ADDED) */
+        .clock-box { text-align: center; margin-top: 10px; font-family: 'Orbitron'; }
+        #digital-clock { font-size: 2.8rem; font-weight: 900; color: white; text-shadow: 0 0 20px var(--ultra-hd); line-height: 1; }
+        #date-box { font-size: 0.9rem; color: var(--gold); letter-spacing: 3px; margin-top: 10px; font-weight: bold; }
 
-        /* APP CHÍNH */
-        #main-app { display: none; opacity: 0; height: 100vh; flex-direction: column; align-items: center; justify-content: center; transition: 2s; }
+        /* 👑 THỐNG KÊ NGÀY YÊU */
+        #main-app { display: none; opacity: 0; height: 100vh; flex-direction: column; align-items: center; justify-content: center; transition: 1.5s ease; }
+        .stats-box { text-align: center; margin: 15px 0; }
+        .days-big { font-family: 'Orbitron'; font-size: 5.5rem; font-weight: 900; color: white; text-shadow: 0 0 30px var(--gold); line-height: 1; }
         
-        .stats-card {
-            text-align: center; background: rgba(255, 255, 255, 0.05);
-            padding: 30px; border-radius: 40px; backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1); margin-bottom: 30px;
-        }
-        .days-count {
-            font-family: 'Orbitron', sans-serif; font-size: 5rem; font-weight: 900;
-            background: linear-gradient(180deg, #fff, var(--gold));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-        .precision-clock { font-family: 'Orbitron'; color: var(--gold); font-size: 1rem; margin-top: 10px; letter-spacing: 2px; }
+        /* 📜 THÁNH CHỈ & HIỆU ỨNG */
+        .scroll-btn { width: 260px; padding: 15px; background: linear-gradient(45deg, var(--red), #ff4d6d); border: 2px solid var(--gold); border-radius: 50px; font-family: 'Orbitron'; color: var(--gold); cursor: pointer; text-align: center; box-shadow: 0 0 25px var(--red); font-size: 0.9rem; font-weight: 900; }
+        .firework { position: fixed; pointer-events: none; border-radius: 50%; z-index: 10002; }
+        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.98); display: none; justify-content: center; align-items: center; z-index: 10001; }
+        .scroll-content { background: #fff9e6; width: 90%; max-width: 450px; padding: 25px; border-radius: 10px; border: 8px double var(--red); color: #222; }
 
-        /* THÁNH CHỈ POLAROID */
-        .holy-decree {
-            width: 300px; height: 180px; background: linear-gradient(135deg, var(--premium-red), var(--royal-pink));
-            border: 3px solid var(--gold); border-radius: 15px; cursor: pointer;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            box-shadow: 0 0 30px rgba(255, 77, 109, 0.4);
-        }
-
-        /* OVERLAY LỜI CHÚC & ẢNH */
-        .overlay {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.95);
-            display: none; justify-content: center; align-items: center; z-index: 10001;
-        }
-        .scroll-wrap {
-            background: #f4e4bc; width: 90%; max-width: 450px;
-            padding: 30px; border-radius: 5px; position: relative;
-            border-left: 15px solid var(--premium-red); border-right: 15px solid var(--premium-red);
-            transform: scale(0.8); opacity: 0; transition: 0.5s;
-        }
-        .scroll-wrap.active { transform: scale(1); opacity: 1; }
-
-        /* HIỆU ỨNG POLAROID */
-        .polaroid {
-            width: 150px; background: white; padding: 10px 10px 30px 10px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3); border-radius: 2px;
-            position: absolute; top: -80px; left: 50%;
-            transform: translateX(-50%) rotate(-5deg); transition: 0.8s;
-        }
-        .polaroid img { width: 100%; height: 130px; object-fit: cover; }
+        @keyframes beam { 0% { opacity: 0.3; } 50% { opacity: 1; } 100% { opacity: 0.3; } }
+        @keyframes pulse-gold { 0% { transform: scale(1); } 50% { transform: scale(1.5); } 100% { transform: scale(1); } }
     </style>
 </head>
-<body onclick="createMagic(event)">
+<body onclick="spawnFirework(event)">
 
-    <div id="gate">
-        <i class="fa-solid fa-lock" style="color: var(--gold); font-size: 2rem; margin-bottom: 20px;"></i>
-        <h2 style="font-family: 'Orbitron'; font-size: 0.8rem; letter-spacing: 5px; margin-bottom: 30px;">MẬT MÃ THIÊN ĐÌNH</h2>
-        <input type="password" id="pass" class="pass-input" placeholder="••••" maxlength="4">
-        <p style="font-size: 0.7rem; opacity: 0.5;">Gợi ý: Ngày kỷ niệm của chúng ta (DDMM)</p>
-        <button onclick="checkPass()" style="margin-top: 20px; background: var(--gold); border: none; padding: 10px 30px; border-radius: 20px; cursor: pointer; font-weight: bold;">TIẾP CHỈ</button>
+    <div id="gate" style="position: fixed; inset: 0; background: black; z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+        <div onclick="unlockVip()" style="padding: 20px 40px; border: 3px solid var(--gold); color: var(--gold); font-family: 'Orbitron'; font-size: 1.2rem; cursor: pointer; border-radius: 10px; box-shadow: 0 0 30px var(--gold);">
+            Gửi Cục Vàng 💍👑
+        </div>
+        <p style="margin-top: 20px; font-family: 'Orbitron'; letter-spacing: 5px; font-size: 0.6rem; opacity: 0.7;">Cục Vàng Dễ Thương♥️</p>
     </div>
 
     <audio id="bgm" loop><source src="https://files.catbox.moe/6qjxys" type="audio/mpeg"></audio>
 
     <div id="main-app">
-        <div class="stats-card">
-            <p style="color: var(--gold); font-family: 'Orbitron'; letter-spacing: 3px; font-size: 0.7rem;">KHOẢNH KHẮC VĨNH CỬU</p>
-            <div id="days" class="days-count">0</div>
-            <div id="clock" class="precision-clock">00H : 00M : 00S</div>
-            <p style="margin-top: 15px; font-weight: 600; font-size: 0.8rem;">Bên Phương Anh mỗi giây đều quý giá</p>
+        <div class="radar-container">
+            <div class="map-overlay"></div>
+            <div class="marker vinh-long" style="animation: pulse-gold 2s infinite;"></div>
+            <div class="label" style="top: 75%; left: 30%;">VĨNH LONG</div>
+            <div id="laser" class="laser-line"></div>
+            <div class="marker tp-hcm" style="animation: pulse-gold 1.5s infinite;"></div>
+            <div class="label" style="top: 35%; left: 60%;">TP. HỒ CHÍ MINH</div>
+            <div style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); font-family: 'Orbitron'; color: var(--ultra-hd); font-size: 0.6rem; width: 100%; text-align: center;">
+                Radar Vệ Tinh 2026
+            </div>
         </div>
 
-        <div class="holy-decree" onclick="openDecree()">
-            <i class="fa-solid fa-scroll" style="color: var(--gold); font-size: 2.5rem; margin-bottom: 10px;"></i>
-            <span style="font-family: 'Orbitron'; color: var(--gold); font-weight: 900;">THIÊN ĐÌNH CÓ CHỈ</span>
-            <p style="font-size: 0.7rem; opacity: 0.8;">CHẠM ĐỂ KHAI CHỈ</p>
+        <div class="clock-box">
+            <div id="digital-clock">00:00:00</div>
+            <div id="date-box">THỨ HAI, 01/01/2026</div>
+        </div>
+
+        <div class="stats-box">
+            <div id="days" class="days-big">0</div>
+            <p style="font-family: 'Orbitron'; letter-spacing: 4px; color: var(--gold); font-size: 0.8rem; margin-top: 5px;">Ngày Hạnh Phúc Của Bé Yêu♥️</p>
+        </div>
+
+        <div class="scroll-btn" onclick="openUltraScroll()">
+            <i class="fa-solid fa-crown"></i> TIẾP CHỈ 
         </div>
     </div>
 
     <div id="overlay" class="overlay">
-        <div class="scroll-wrap" id="scroll">
-            <div class="polaroid" id="photo">
-                <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&q=80&w=500" alt="Memory">
+        <div class="scroll-content">
+            <h1 style="font-family: 'Dancing Script'; color: var(--red); text-align: center; font-size: 2.2rem;">Gửi Phương Anh ❤️</h1>
+            <div style="margin: 15px 0; font-style: italic; font-weight: 600; text-align: center; line-height: 1.6;">
+                <p>"Dù Vĩnh Long cách TP.HCM bao nhiêu cây số, tình yêu của anh vẫn vượt mọi radar để tìm thấy em."</p>
             </div>
-            <div style="text-align: center; padding-top: 80px;">
-                <h2 style="font-family: 'Dancing Script'; color: var(--premium-red); font-size: 2.2rem;">Gửi Phương Anh ❤️</h2>
-                <p id="poem-text" style="color: #333; font-style: italic; min-height: 80px; display: flex; align-items: center; justify-content: center; font-weight: 600;"></p>
-                <div style="border-top: 1px dashed #ccc; margin: 15px 0; padding-top: 10px;">
-                    <p id="wish-text" style="color: var(--premium-red); font-size: 0.9rem; font-weight: bold;"></p>
-                </div>
-                <button onclick="closeDecree()" style="background: var(--premium-red); color: white; border: none; padding: 10px 30px; border-radius: 20px; cursor: pointer;">TUÂN CHỈ!</button>
+            <hr style="border: 1px dashed var(--red);">
+            <div style="text-align: center; margin-top: 15px;">
+                <p style="color: #c9184a; font-weight: 900; font-family: 'Orbitron'; font-size: 0.7rem;">Lời Nhắc Gửi Bé Yêu ♥️:</p>
+                <p style="font-size: 0.9rem;">Yêu Khang thật nhiều và luôn hạnh phúc nhé!</p>
             </div>
+            <center><button onclick="closeUltraScroll()" style="margin-top: 20px; background: var(--red); color: white; border: none; padding: 10px 30px; border-radius: 25px; font-weight: bold; cursor: pointer;">TUÂN CHỈ!</button></center>
         </div>
     </div>
 
     <script>
-        // 1. KIỂM TRA MẬT MÃ (Ví dụ: 2101 - Ngày 21 tháng 01)
-        function checkPass() {
-            const val = document.getElementById('pass').value;
-            if(val === "2101") { // Thay đổi mật mã tại đây
-                document.getElementById('bgm').play();
-                document.getElementById('gate').style.transform = 'translateY(-100%)';
+        function unlockVip() {
+            document.getElementById('bgm').play();
+            document.getElementById('gate').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('gate').style.display = 'none';
+                document.getElementById('main-app').style.display = 'flex';
                 setTimeout(() => {
-                    document.getElementById('gate').style.display = 'none';
-                    document.getElementById('main-app').style.display = 'flex';
-                    setTimeout(() => document.getElementById('main-app').style.opacity = '1', 50);
-                    startTimeline();
-                }, 1000);
-            } else {
-                alert("Mật mã Thiên đình không đúng rồi Phương Anh ơi! ❤️");
+                    document.getElementById('main-app').style.opacity = '1';
+                    connectRadar();
+                }, 100);
+            }, 1000);
+            updateAll();
+            setInterval(updateAll, 1000);
+        }
+
+        function updateAll() {
+            // Cập nhật Đồng hồ & Lịch
+            const now = new Date();
+            const h = String(now.getHours()).padStart(2, '0');
+            const m = String(now.getMinutes()).padStart(2, '0');
+            const s = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('digital-clock').innerText = `${h}:${m}:${s}`;
+
+            const daysWeek = ["CHỦ NHẬT", "THỨ HAI", "THỨ BA", "THỨ TƯ", "THỨ NĂM", "THỨ SÁU", "THỨ BẢY"];
+            const d = String(now.getDate()).padStart(2, '0');
+            const mon = String(now.getMonth() + 1).padStart(2, '0');
+            const y = now.getFullYear();
+            document.getElementById('date-box').innerText = `${daysWeek[now.getDay()]}, ${d}/${mon}/${y}`;
+
+            // Cập nhật Ngày yêu (21/01/2023)
+            const start = new Date('2023-01-21');
+            const diff = Math.floor((now - start) / (1000 * 60 * 60 * 24));
+            document.getElementById('days').innerText = diff;
+        }
+
+        function connectRadar() {
+            const laser = document.getElementById('laser');
+            laser.style.width = '145px';
+            laser.style.left = '37%';
+            laser.style.top = '72%';
+            laser.style.transform = 'rotate(-48deg)';
+        }
+
+        function spawnFirework(e) {
+            const colors = ['#fcc201', '#ff4d6d', '#00f2ff', '#ffffff'];
+            for (let i = 0; i < 35; i++) {
+                const p = document.createElement('div');
+                p.className = 'firework';
+                p.style.left = e.clientX + 'px';
+                p.style.top = e.clientY + 'px';
+                p.style.width = Math.random() * 5 + 'px';
+                p.style.height = p.style.width;
+                p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                document.body.appendChild(p);
+
+                const angle = Math.random() * Math.PI * 2;
+                const speed = Math.random() * 8 + 4;
+                let x = 0, y = 0, opacity = 1;
+
+                const move = () => {
+                    x += Math.cos(angle) * speed;
+                    y += Math.sin(angle) * speed;
+                    opacity -= 0.02;
+                    p.style.transform = `translate(${x}px, ${y}px)`;
+                    p.style.opacity = opacity;
+                    if (opacity > 0) requestAnimationFrame(move);
+                    else p.remove();
+                };
+                requestAnimationFrame(move);
             }
         }
 
-        // 2. HIỆU ỨNG CHẠM MAGIC
-        function createMagic(e) {
-            const icons = ['🌸', '🍬', '🎀', '✨', '💖', '🍭'];
-            const ripple = document.createElement('div');
-            ripple.className = 'ripple';
-            ripple.style.left = e.clientX + 'px';
-            ripple.style.top = e.clientY + 'px';
-            document.body.appendChild(ripple);
-            
-            const icon = document.createElement('div');
-            icon.className = 'floating-icon';
-            icon.innerText = icons[Math.floor(Math.random() * icons.length)];
-            icon.style.left = e.clientX + 'px';
-            icon.style.top = e.clientY + 'px';
-            document.body.appendChild(icon);
-
-            setTimeout(() => { ripple.remove(); icon.remove(); }, 1000);
-        }
-
-        // 3. DÒNG THỜI GIAN TRÔI (PRECISION CLOCK)
-        function startTimeline() {
-            const startDate = new Date('2023-01-21T00:00:00');
-            setInterval(() => {
-                const now = new Date();
-                const diff = now - startDate;
-                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
-                const m = Math.floor((diff / (1000 * 60)) % 60);
-                const s = Math.floor((diff / 1000) % 60);
-                document.getElementById('days').innerText = d;
-                document.getElementById('clock').innerText = 
-                    `${h.toString().padStart(2,'0')}H : ${m.toString().padStart(2,'0')}M : ${s.toString().padStart(2,'0')}S`;
-            }, 1000);
-        }
-
-        // 4. KHO THƠ 4D (Hệ thống tự động chọn thơ theo ngày trong năm)
-        const poems = [
-            "Mây trôi chẳng đợi gió ngàn - Lòng anh chỉ đợi nàng Phương Anh.",
-            "Nắng chia nửa bãi, chiều rồi - Yêu em anh chẳng thể rời nửa giây.",
-            "Thế gian vạn vật xoay vần - Phương Anh vẫn cứ là phần anh yêu.",
-            "Trăm năm trong cõi người ta - Phương Anh xinh nhất, đó là đương nhiên!"
-            // Khang có thể thêm đủ 365 câu vào đây
-        ];
-
-        function openDecree() {
-            const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
-            document.getElementById('poem-text').innerText = poems[dayOfYear % poems.length];
-            
-            // Lời chúc theo buổi (tận dụng code cũ của bạn)
-            const hr = new Date().getHours();
-            let wish = (hr < 11) ? "Sáng sớm bình an nhé bé yêu!" : (hr < 18) ? "Chiều làm việc thật vui nha!" : "Ngủ ngon và mơ về anh nhé!";
-            document.getElementById('wish-text').innerText = wish;
-
-            document.getElementById('overlay').style.display = 'flex';
-            setTimeout(() => {
-                document.getElementById('scroll').classList.add('active');
-                document.getElementById('photo').style.top = '-100px';
-                document.getElementById('photo').style.transform = 'translateX(-50%) rotate(5deg)';
-            }, 100);
-        }
-
-        function closeDecree() {
-            document.getElementById('scroll').classList.remove('active');
-            setTimeout(() => document.getElementById('overlay').style.display = 'none', 500);
-        }
+        function openUltraScroll() { document.getElementById('overlay').style.display = 'flex'; }
+        function closeUltraScroll() { document.getElementById('overlay').style.display = 'none'; }
     </script>
 </body>
 </html>
