@@ -3,259 +3,216 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Eternal Love v15.0 - Ultra Experience</title>
+    <title>INFINITE LOVE | KHANG ❤️ PHƯƠNG ANH</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Orbitron:wght@400;900&family=Quicksand:wght@300;600&display=swap" rel="stylesheet">
+    
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;500;700&display=swap');
-
         :root {
-            --primary: #ff4d6d;
-            --glass: rgba(255, 255, 255, 0.1);
-            --bg-dark: #0a0a0a;
+            --gold: #fcc201;
+            --premium-red: #800f2f;
+            --royal-pink: #ff4d6d;
+            --deep-space: #050505;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { 
-            height: 100vh; font-family: 'Quicksand', sans-serif; background: var(--bg-dark); 
-            color: white; overflow: hidden; display: flex; justify-content: center; align-items: center;
+        body { height: 100vh; background: var(--deep-space); overflow: hidden; font-family: 'Quicksand', sans-serif; color: white; touch-action: none; }
+
+        /* HIỆU ỨNG CHẠM (MAGIC RIPPLE) */
+        .ripple {
+            position: absolute; border-radius: 50%; background: rgba(255, 255, 255, 0.4);
+            transform: scale(0); animation: ripple-effect 0.8s linear; pointer-events: none; z-index: 9999;
         }
+        @keyframes ripple-effect { to { transform: scale(4); opacity: 0; } }
+        .floating-icon {
+            position: absolute; pointer-events: none; z-index: 9998;
+            animation: float-up 1s ease-out forwards; font-size: 1.5rem;
+        }
+        @keyframes float-up { to { transform: translateY(-100px) rotate(360deg); opacity: 0; } }
 
-        canvas { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
-
-        /* Màn hình khóa tinh xảo */
-        #lock {
-            position: fixed; inset: 0; background: var(--bg-dark); z-index: 2000;
+        /* GATE & PASSWORD */
+        #gate {
+            position: fixed; inset: 0; background: black; z-index: 10000;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            transition: 1.5s cubic-bezier(1, 0, 0, 1);
+            transition: 2s cubic-bezier(1, 0, 0, 1);
         }
-        .lock-box { text-align: center; padding: 40px; background: var(--glass); border-radius: 40px; backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); }
-        input { 
-            width: 220px; padding: 15px; border-radius: 15px; border: none; background: rgba(255,255,255,0.05); 
-            color: white; font-size: 24px; text-align: center; letter-spacing: 5px; outline: none; margin: 20px 0;
-        }
-
-        /* Thẻ nội dung chính */
-        .main-container {
-            position: relative; z-index: 10; width: 92%; max-width: 400px;
-            padding: 40px 25px; border-radius: 45px; background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(40px); border: 1px solid rgba(255,255,255,0.15);
-            text-align: center; display: none; opacity: 0; transform: scale(0.9);
-            transition: 1s cubic-bezier(0.2, 1, 0.2, 1);
-        }
-        .main-container.visible { opacity: 1; transform: scale(1); display: block; }
-
-        /* Heartbeat Timeline Popup */
-        #timelinePopup {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 3000;
-            display: none; padding: 40px 20px; overflow-y: auto;
-        }
-        .milestone { margin-bottom: 30px; border-left: 2px solid var(--primary); padding-left: 20px; text-align: left; }
-        .milestone h4 { color: var(--primary); font-size: 14px; }
-        .milestone p { font-size: 16px; margin-top: 5px; }
-
-        /* Sound Control */
-        #soundToggle {
-            position: fixed; top: 20px; right: 20px; z-index: 100;
-            width: 40px; height: 40px; border-radius: 50%; background: var(--glass);
-            display: flex; align-items: center; justify-content: center; cursor: pointer;
+        .pass-input {
+            background: none; border: none; border-bottom: 2px solid var(--gold);
+            color: var(--gold); font-family: 'Orbitron'; text-align: center;
+            font-size: 1.5rem; width: 200px; margin-bottom: 20px; outline: none;
         }
 
-        /* UI Elements */
-        .days-counter { cursor: pointer; display: inline-block; padding: 10px 20px; border-radius: 30px; background: var(--primary); font-weight: 700; margin-bottom: 20px; box-shadow: 0 10px 20px rgba(255, 77, 109, 0.3); }
-        .quote { font-style: italic; opacity: 0.9; line-height: 1.6; min-height: 60px; margin: 20px 0; }
-        .weather-tag { font-size: 12px; background: rgba(255,255,255,0.1); padding: 5px 12px; border-radius: 20px; margin-bottom: 10px; display: inline-block; }
-        .time-capsule { display: none; background: linear-gradient(45deg, #ffd700, #ff4d6d); padding: 15px; border-radius: 20px; margin-top: 20px; font-weight: 700; animation: pulse 2s infinite; cursor: pointer; }
+        /* APP CHÍNH */
+        #main-app { display: none; opacity: 0; height: 100vh; flex-direction: column; align-items: center; justify-content: center; transition: 2s; }
         
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
-        .btn { padding: 15px 40px; border-radius: 100px; border: none; font-weight: 700; cursor: pointer; transition: 0.3s; margin-top: 20px; }
-        .btn-yes { background: white; color: black; }
+        .stats-card {
+            text-align: center; background: rgba(255, 255, 255, 0.05);
+            padding: 30px; border-radius: 40px; backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1); margin-bottom: 30px;
+        }
+        .days-count {
+            font-family: 'Orbitron', sans-serif; font-size: 5rem; font-weight: 900;
+            background: linear-gradient(180deg, #fff, var(--gold));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .precision-clock { font-family: 'Orbitron'; color: var(--gold); font-size: 1rem; margin-top: 10px; letter-spacing: 2px; }
+
+        /* THÁNH CHỈ POLAROID */
+        .holy-decree {
+            width: 300px; height: 180px; background: linear-gradient(135deg, var(--premium-red), var(--royal-pink));
+            border: 3px solid var(--gold); border-radius: 15px; cursor: pointer;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            box-shadow: 0 0 30px rgba(255, 77, 109, 0.4);
+        }
+
+        /* OVERLAY LỜI CHÚC & ẢNH */
+        .overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.95);
+            display: none; justify-content: center; align-items: center; z-index: 10001;
+        }
+        .scroll-wrap {
+            background: #f4e4bc; width: 90%; max-width: 450px;
+            padding: 30px; border-radius: 5px; position: relative;
+            border-left: 15px solid var(--premium-red); border-right: 15px solid var(--premium-red);
+            transform: scale(0.8); opacity: 0; transition: 0.5s;
+        }
+        .scroll-wrap.active { transform: scale(1); opacity: 1; }
+
+        /* HIỆU ỨNG POLAROID */
+        .polaroid {
+            width: 150px; background: white; padding: 10px 10px 30px 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3); border-radius: 2px;
+            position: absolute; top: -80px; left: 50%;
+            transform: translateX(-50%) rotate(-5deg); transition: 0.8s;
+        }
+        .polaroid img { width: 100%; height: 130px; object-fit: cover; }
     </style>
 </head>
-<body>
+<body onclick="createMagic(event)">
 
-    <div id="soundToggle" onclick="toggleMusic()">🔇</div>
-    <canvas id="bgCanvas"></canvas>
+    <div id="gate">
+        <i class="fa-solid fa-lock" style="color: var(--gold); font-size: 2rem; margin-bottom: 20px;"></i>
+        <h2 style="font-family: 'Orbitron'; font-size: 0.8rem; letter-spacing: 5px; margin-bottom: 30px;">MẬT MÃ THIÊN ĐÌNH</h2>
+        <input type="password" id="pass" class="pass-input" placeholder="••••" maxlength="4">
+        <p style="font-size: 0.7rem; opacity: 0.5;">Gợi ý: Ngày kỷ niệm của chúng ta (DDMM)</p>
+        <button onclick="checkPass()" style="margin-top: 20px; background: var(--gold); border: none; padding: 10px 30px; border-radius: 20px; cursor: pointer; font-weight: bold;">TIẾP CHỈ</button>
+    </div>
 
-    <div id="lock">
-        <div class="lock-box">
-            <h2 style="letter-spacing: 5px; font-weight: 300;">Mở Khoá Ngày Kỉ Niệm</h2>
-            <input type="password" id="passInput" placeholder="21012023" maxlength="8">
-            <br>
-            <button class="btn btn-yes" onclick="unlock()">Mở Khoá ♥️💍</button>
+    <audio id="bgm" loop><source src="https://files.catbox.moe/6qjxys" type="audio/mpeg"></audio>
+
+    <div id="main-app">
+        <div class="stats-card">
+            <p style="color: var(--gold); font-family: 'Orbitron'; letter-spacing: 3px; font-size: 0.7rem;">KHOẢNH KHẮC VĨNH CỬU</p>
+            <div id="days" class="days-count">0</div>
+            <div id="clock" class="precision-clock">00H : 00M : 00S</div>
+            <p style="margin-top: 15px; font-weight: 600; font-size: 0.8rem;">Bên Phương Anh mỗi giây đều quý giá</p>
+        </div>
+
+        <div class="holy-decree" onclick="openDecree()">
+            <i class="fa-solid fa-scroll" style="color: var(--gold); font-size: 2.5rem; margin-bottom: 10px;"></i>
+            <span style="font-family: 'Orbitron'; color: var(--gold); font-weight: 900;">THIÊN ĐÌNH CÓ CHỈ</span>
+            <p style="font-size: 0.7rem; opacity: 0.8;">CHẠM ĐỂ KHAI CHỈ</p>
         </div>
     </div>
 
-    <div class="main-container" id="mainApp">
-        <div class="weather-tag" id="weatherInfo">Đang cập nhật thời tiết...</div>
-        <br>
-        <div class="days-counter" onclick="showTimeline()" id="daysDisplay">HÀNH TRÌNH ❤️</div>
-        
-        <div id="mainEmoji" style="font-size: 80px; margin: 20px;">💖</div>
-        <h1 id="titleDisplay" style="font-size: 24px; margin-bottom: 10px;">Chào bé yêu!</h1>
-        <p class="quote" id="msgDisplay">...</p>
-
-        <div id="capsuleArea" class="time-capsule" onclick="openCapsule()">
-            🎁 THƯ TỪ QUÁ KHỨ (BẤM ĐỂ MỞ)
+    <div id="overlay" class="overlay">
+        <div class="scroll-wrap" id="scroll">
+            <div class="polaroid" id="photo">
+                <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&q=80&w=500" alt="Memory">
+            </div>
+            <div style="text-align: center; padding-top: 80px;">
+                <h2 style="font-family: 'Dancing Script'; color: var(--premium-red); font-size: 2.2rem;">Gửi Phương Anh ❤️</h2>
+                <p id="poem-text" style="color: #333; font-style: italic; min-height: 80px; display: flex; align-items: center; justify-content: center; font-weight: 600;"></p>
+                <div style="border-top: 1px dashed #ccc; margin: 15px 0; padding-top: 10px;">
+                    <p id="wish-text" style="color: var(--premium-red); font-size: 0.9rem; font-weight: bold;"></p>
+                </div>
+                <button onclick="closeDecree()" style="background: var(--premium-red); color: white; border: none; padding: 10px 30px; border-radius: 20px; cursor: pointer;">TUÂN CHỈ!</button>
+            </div>
         </div>
-
-        <button class="btn btn-yes" onclick="celebrate()">Yêu anh ❤️</button>
-        <p style="font-size: 10px; margin-top: 20px; opacity: 0.5;">Lắc nhẹ điện thoại để nhận quẻ thăm may mắn!</p>
     </div>
-
-    <div id="timelinePopup" onclick="this.style.display='none'">
-        <h2 style="text-align: center; margin-bottom: 30px;">Dòng Thời Gian Nhịp Đập</h2>
-        <div class="milestone"><h4>21/01/2023</h4><p>Ngày đầu tiên mình gọi nhau là "Người yêu" ❤️</p></div>
-        <div class="milestone"><h4>14/02/2023</h4><p>Valentine đầu tiên đầy lãng mạn 🌹</p></div>
-        <div class="milestone"><h4>21/01/2024</h4><p>Tròn 1 năm bên nhau hạnh phúc 🎂</p></div>
-        <div class="milestone"><h4>HÔM NAY</h4><p>Vẫn là ngày anh yêu em nhiều nhất 💎</p></div>
-        <p style="text-align: center; opacity: 0.5;">(Bấm bất kỳ đâu để đóng)</p>
-    </div>
-
-    <audio id="bgMusic" loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-    </audio>
 
     <script>
-        const LOVE_DATE = new Date('2023-01-21');
-        const CAPSULE_DATE = new Date('2027-01-21');
-        const PASS = "21012023";
-        let isMusicPlaying = false;
-
-        // 1. Mở khóa và Khởi tạo âm thanh
-        function unlock() {
-            if(document.getElementById('passInput').value === PASS) {
-                document.getElementById('lock').style.transform = 'translateY(-100%)';
-                const app = document.getElementById('mainApp');
-                app.style.display = 'block';
-                setTimeout(() => app.classList.add('visible'), 100);
-                
-                // Khởi động các tính năng
-                initLogic();
-                initShake();
-                getWeather();
-                initCanvas();
-            } else {
-                alert("Nhập sai pass rồi bé iu ơi!");
-            }
-        }
-
-        // 2. Logic Thời gian & Thư gửi tương lai
-        function initLogic() {
-            const now = new Date();
-            const diff = Math.floor((now - LOVE_DATE) / 86400000);
-            document.getElementById('daysDisplay').innerText = `HÀNH TRÌNH ${diff} NGÀY`;
-
-            // Kiểm tra Time Capsule
-            if (now >= CAPSULE_DATE) {
-                document.getElementById('capsuleArea').style.display = 'block';
-            }
-
-            const hrs = now.getHours();
-            let title = "", msg = "";
-            if(hrs < 12) { title = "Chào buổi sáng bé!"; msg = "Chúc cục vàng một ngày mới rạng rỡ như chính nụ cười của em vậy."; }
-            else if(hrs < 18) { title = "Chiều ấm áp nha!"; msg = "Anh đang nhớ em rất nhiều, em làm việc có mệt không?"; }
-            else { title = "Chúc bé ngủ ngon!"; msg = "Gác lại âu lo và chìm vào giấc ngủ thật êm đềm nhé công chúa."; }
-            
-            document.getElementById('titleDisplay').innerText = title;
-            document.getElementById('msgDisplay').innerText = msg;
-        }
-
-        // 3. Âm thanh ký ức
-        function toggleMusic() {
-            const m = document.getElementById('bgMusic');
-            const btn = document.getElementById('soundToggle');
-            if(!isMusicPlaying) {
-                m.play(); btn.innerText = "🔊"; isMusicPlaying = true;
-            } else {
-                m.pause(); btn.innerText = "🔇"; isMusicPlaying = false;
-            }
-        }
-
-        // 4. Lắc để nhận may mắn
-        function initShake() {
-            if (typeof DeviceMotionEvent.requestPermission === 'function') {
-                // iPhone yêu cầu quyền
-                window.addEventListener('click', () => {
-                    DeviceMotionEvent.requestPermission();
-                }, {once: true});
-            }
-
-            let lastX, lastY, lastZ;
-            let threshold = 15;
-
-            window.addEventListener('devicemotion', (e) => {
-                let acc = e.accelerationIncludingGravity;
-                if(!acc.x) return;
-                
-                let delta = Math.abs(acc.x + acc.y + acc.z - lastX - lastY - lastZ);
-                if (delta > threshold) {
-                    const lucks = [
-                        "Hôm nay bé sẽ được anh hôn 100 cái! 😘",
-                        "Quẻ phán: Chiều nay anh sẽ dẫn bé đi ăn món bé thích! 🍕",
-                        "Bé là người xinh đẹp nhất thế giới hôm nay! ✨",
-                        "May mắn của bé hôm nay: Anh yêu bé nhiều gấp đôi! ❤️"
-                    ];
-                    alert(lucks[Math.floor(Math.random()*lucks.length)]);
-                }
-                lastX = acc.x; lastY = acc.y; lastZ = acc.z;
-            });
-        }
-
-        // 5. Thời tiết tâm trạng (Giả lập hoặc dùng API thực)
-        async function getWeather() {
-            // Thay 'YOUR_API_KEY' bằng key thực tế từ OpenWeatherMap
-            const API_KEY = 'YOUR_API_KEY'; 
-            const CITY = 'Saigon';
-            try {
-                // Ở đây mình giả lập để bạn thấy hiệu ứng ngay
-                const status = ["mưa", "nắng", "mây"][Math.floor(Math.random()*3)];
-                let weatherTxt = "";
-                if(status === "mưa") weatherTxt = "Trời đang mưa rồi, bé nhớ che ô và giữ ấm nhé. Anh muốn là chiếc ô che cho em. 🌧️";
-                else if(status === "nắng") weatherTxt = "Trời nắng đẹp, đi uống trà sữa cho mát không bé iu? ☀️";
-                else weatherTxt = "Trời dịu mát, rất thích hợp để nắm tay anh đi dạo đó! ☁️";
-                
-                document.getElementById('weatherInfo').innerText = weatherTxt;
-            } catch (e) {
-                document.getElementById('weatherInfo').innerText = "Luôn yêu em bất kể thời tiết! ❤️";
-            }
-        }
-
-        function showTimeline() { document.getElementById('timelinePopup').style.display = 'block'; }
-
-        function openCapsule() {
-            alert("Thư từ 2023 gửi bé: 'Chào em của tương lai, dù bao nhiêu năm trôi qua, hy vọng nụ cười của em vẫn rạng rỡ và tay mình vẫn nắm chặt như ngày đầu...'");
-        }
-
-        // Hiệu ứng pháo hoa
-        function celebrate() {
-            const cv = document.getElementById('bgCanvas');
-            const ctx = cv.getContext('2d');
-            for(let i=0; i<10; i++) {
+        // 1. KIỂM TRA MẬT MÃ (Ví dụ: 2101 - Ngày 21 tháng 01)
+        function checkPass() {
+            const val = document.getElementById('pass').value;
+            if(val === "2101") { // Thay đổi mật mã tại đây
+                document.getElementById('bgm').play();
+                document.getElementById('gate').style.transform = 'translateY(-100%)';
                 setTimeout(() => {
-                    const x = Math.random()*cv.width, y = Math.random()*cv.height;
-                    const color = `hsl(${Math.random()*360}, 100%, 70%)`;
-                    for(let j=0; j<30; j++) {
-                        let vx = (Math.random()-0.5)*15, vy = (Math.random()-0.5)*15, l = 50;
-                        function f() { if(l<=0) return; ctx.fillStyle = color; ctx.beginPath(); ctx.arc(x+(50-l)*vx, y+(50-l)*vy, 2, 0, 7); ctx.fill(); l--; requestAnimationFrame(f); }
-                        f();
-                    }
-                }, i*200);
+                    document.getElementById('gate').style.display = 'none';
+                    document.getElementById('main-app').style.display = 'flex';
+                    setTimeout(() => document.getElementById('main-app').style.opacity = '1', 50);
+                    startTimeline();
+                }, 1000);
+            } else {
+                alert("Mật mã Thiên đình không đúng rồi Phương Anh ơi! ❤️");
             }
-            alert("Anh yêu em nhất trên đời!");
         }
 
-        function initCanvas() {
-            const cv = document.getElementById('bgCanvas');
-            const ctx = cv.getContext('2d');
-            cv.width = window.innerWidth; cv.height = window.innerHeight;
-            const pts = [];
-            for(let i=0; i<50; i++) pts.push({x: Math.random()*cv.width, y: Math.random()*cv.height, r: Math.random()*2, v: Math.random()*0.5+0.1});
-            function anim() {
-                ctx.clearRect(0,0,cv.width,cv.height);
-                ctx.fillStyle = "rgba(255,255,255,0.2)";
-                pts.forEach(p => { p.y -= p.v; if(p.y < 0) p.y = cv.height; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 7); ctx.fill(); });
-                requestAnimationFrame(anim);
-            }
-            anim();
+        // 2. HIỆU ỨNG CHẠM MAGIC
+        function createMagic(e) {
+            const icons = ['🌸', '🍬', '🎀', '✨', '💖', '🍭'];
+            const ripple = document.createElement('div');
+            ripple.className = 'ripple';
+            ripple.style.left = e.clientX + 'px';
+            ripple.style.top = e.clientY + 'px';
+            document.body.appendChild(ripple);
+            
+            const icon = document.createElement('div');
+            icon.className = 'floating-icon';
+            icon.innerText = icons[Math.floor(Math.random() * icons.length)];
+            icon.style.left = e.clientX + 'px';
+            icon.style.top = e.clientY + 'px';
+            document.body.appendChild(icon);
+
+            setTimeout(() => { ripple.remove(); icon.remove(); }, 1000);
+        }
+
+        // 3. DÒNG THỜI GIAN TRÔI (PRECISION CLOCK)
+        function startTimeline() {
+            const startDate = new Date('2023-01-21T00:00:00');
+            setInterval(() => {
+                const now = new Date();
+                const diff = now - startDate;
+                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                const m = Math.floor((diff / (1000 * 60)) % 60);
+                const s = Math.floor((diff / 1000) % 60);
+                document.getElementById('days').innerText = d;
+                document.getElementById('clock').innerText = 
+                    `${h.toString().padStart(2,'0')}H : ${m.toString().padStart(2,'0')}M : ${s.toString().padStart(2,'0')}S`;
+            }, 1000);
+        }
+
+        // 4. KHO THƠ 4D (Hệ thống tự động chọn thơ theo ngày trong năm)
+        const poems = [
+            "Mây trôi chẳng đợi gió ngàn - Lòng anh chỉ đợi nàng Phương Anh.",
+            "Nắng chia nửa bãi, chiều rồi - Yêu em anh chẳng thể rời nửa giây.",
+            "Thế gian vạn vật xoay vần - Phương Anh vẫn cứ là phần anh yêu.",
+            "Trăm năm trong cõi người ta - Phương Anh xinh nhất, đó là đương nhiên!"
+            // Khang có thể thêm đủ 365 câu vào đây
+        ];
+
+        function openDecree() {
+            const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+            document.getElementById('poem-text').innerText = poems[dayOfYear % poems.length];
+            
+            // Lời chúc theo buổi (tận dụng code cũ của bạn)
+            const hr = new Date().getHours();
+            let wish = (hr < 11) ? "Sáng sớm bình an nhé bé yêu!" : (hr < 18) ? "Chiều làm việc thật vui nha!" : "Ngủ ngon và mơ về anh nhé!";
+            document.getElementById('wish-text').innerText = wish;
+
+            document.getElementById('overlay').style.display = 'flex';
+            setTimeout(() => {
+                document.getElementById('scroll').classList.add('active');
+                document.getElementById('photo').style.top = '-100px';
+                document.getElementById('photo').style.transform = 'translateX(-50%) rotate(5deg)';
+            }, 100);
+        }
+
+        function closeDecree() {
+            document.getElementById('scroll').classList.remove('active');
+            setTimeout(() => document.getElementById('overlay').style.display = 'none', 500);
         }
     </script>
 </body>
