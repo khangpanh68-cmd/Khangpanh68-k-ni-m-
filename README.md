@@ -1,47 +1,40 @@
-# 🌌 Project: Infinite Love 2026 (Version: Ultra VIP)
+# 🌌 Supreme Love 2026 - Ultra HD VIP Pro
 
-> **"Thiên đình có chỉ: Phương Anh tiếp chỉ!"**
-> Một không gian đa vũ trụ được thiết kế riêng để lưu giữ những khoảnh khắc vĩnh cửu của Khang và Phương Anh.
+[![Deploy Status](https://github.com/khangpanh68-cmd/Khangpanh68th-nhch-/actions/workflows/deploy.yml/badge.svg)](https://github.com/khangpanh68-cmd/Khangpanh68th-nhch-/actions/workflows/deploy.yml)
+![Version](https://img.shields.io/badge/Version-2026.UltraHD-00f2ff?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Active_Eternal-fcc201?style=for-the-badge)
 
----
-
-## ✨ Các tính năng "Infinite" nổi bật
-
-Phiên bản 2026 mang đến những trải nghiệm Cinematic độc nhất:
-
-* **🔒 Security Gate (Mật mã Thiên đình):** Lớp bảo vệ riêng tư, chỉ những người nắm giữ "mật mã tình yêu" (DDMM) mới có thể khai mở vũ trụ.
-* **⏱️ Precision Timeline (Dòng thời gian thực):** Đồng hồ đếm ngược đến từng mili giây, cho thấy tình yêu đang lớn dần theo từng nhịp thở.
-* **🪄 Magic Touch (Thần giao cách cảm):** Hiệu ứng Ripple & Floating Icons (🌸, 🍬, ✨) xuất hiện sống động mỗi khi Phương Anh chạm vào màn hình.
-* **📜 Holy Scroll & Polaroid (Thánh chỉ 4D):** Sự kết hợp giữa nét cổ điển của Thánh Chỉ và phong cách hiện đại của ảnh Polaroid lơ lửng.
-* **✍️ 365 Days of Poetry (Kho thơ vạn biến):** Hệ thống tự động chọn một câu thơ tình khác nhau cho mỗi ngày trong năm.
+> **"Dù Vĩnh Long cách TP.HCM bao nhiêu cây số, tình yêu của anh vẫn vượt mọi radar để tìm thấy em."**
+> Một tuyệt phẩm công nghệ dành riêng cho tiên nữ **Phương Anh**.
 
 ---
 
-## 🛠 Công nghệ cốt lõi (Tech Stack)
+## ✨ Tính năng "VIP Pro" Tối Thượng
 
-* **Frontend:** HTML5, CSS3 (Advanced Glassmorphism & Animations), JavaScript ES2026.
-* **Graphics:** Canvas API cho hệ thống hạt (Particles) và hiệu ứng vật lý điểm chạm.
-* **Automation:** GitHub Actions (Deploy.yml v4) cho quy trình triển khai tự động.
-* **Fonts:** `Orbitron` (Công nghệ) & `Dancing Script` (Lãng mạn).
+Phiên bản 2026 mang đến trải nghiệm thị giác và cảm xúc vượt trội:
+
+* **📡 Radar Vệ Tinh Vĩnh Long - TP.HCM:** Hệ thống định vị kết nối Laser thời gian thực giữa hai trái tim (Khang & Phương Anh).
+* **⏰ Digital Clock & Calendar:** Đồng hồ số Neon và Lịch vạn niên chuẩn Việt Nam, cập nhật từng giây chính xác.
+* **👑 Days of Love:** Bộ đếm ngày yêu khổng lồ với hiệu ứng phát sáng Ultra HD.
+* **🎇 Pháo Hoa Ông Trời:** Hiệu ứng pháo hoa đa sắc nổ tung tại điểm chạm (Magic Touch interaction).
+* **📜 Thánh Chỉ Thiên Đình:** Sắc chỉ tình yêu chứa đựng nhiệm vụ lãng mạn hàng ngày cho Phương Anh.
 
 ---
 
-## 🚀 Hướng dẫn dành cho Khang
+## 🛠 Tech Stack (Công nghệ lõi)
 
-Để dự án hoạt động hoàn hảo nhất, bạn hãy lưu ý các tùy chỉnh sau trong `index.html`:
-
-1. **Mật mã truy cập:** Thay đổi tại hàm `checkPass()` (Mặc định là `2101`).
-2. **Ngày kỷ niệm:** Cập nhật tại biến `startDate` trong hàm `startTimeline()`.
-3. **Hình ảnh kỷ niệm:** Thay link ảnh của hai bạn vào thẻ `<img>` bên trong `div.polaroid`.
-4. **Nhạc nền:** Sử dụng link Catbox hoặc bất kỳ nguồn audio trực tiếp nào tại thẻ `<audio>`.
+- **Frontend:** HTML5, CSS3 Advanced (Glassmorphism & Neon Glow Matrix).
+- **Engine:** JavaScript ES2026 (Real-time Sync & Physics Particles).
+- **Infrastructure:** GitHub Actions (CI/CD v4) & GitHub Pages.
+- **Design:** Orbitron Future Font & Dancing Script Romantic.
 
 ---
 
 ## 📦 Cấu trúc Repository
 
 ```text
-├── .github/
-│   └── workflows/
-│       └── deploy.yml   # Hệ thống tự động triển khai 2026
-├── index.html           # Linh hồn của vũ trụ (Mã nguồn chính)
-└── README.md            # Tài liệu hướng dẫn (File này)
+.
+├── .github/workflows/
+│   └── deploy.yml       # Hệ thống triển khai tự động thần tốc
+├── index.html           # Linh hồn của Vũ trụ (Mã nguồn chính)
+└── README.md            # Sách hướng dẫn Thiên Đình (File này)
