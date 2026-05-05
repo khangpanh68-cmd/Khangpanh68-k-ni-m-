@@ -1,46 +1,47 @@
-name: 💖 Deploy Love Project V15 Ultra HD+
+# 🚀 Infinite Love 2026 - Ultra Fast Deployment
+# Thiết kế riêng cho project của Khang & Phương Anh
+name: Deploy Infinite Love 2026
 
-# Tự động hóa quy trình triển khai khi có thay đổi
 on:
   push:
-    branches: ["main", "master"] # Chạy khi bạn push code vào nhánh chính
-  
-  # Hỗ trợ kiểm tra hoặc chạy thủ công từ tab Actions
-  workflow_dispatch:
+    branches: ["main"] # Tự động chạy khi bạn nhấn 'Commit' trên nhánh main
+  workflow_dispatch:      # Cho phép bạn nhấn nút chạy thủ công nếu cần
 
-# Cấu hình quyền hạn (Permissions) cho GitHub Pages 2026
+# Thiết lập quyền hạn tối thiểu để bảo mật
 permissions:
-  contents: read      # Quyền đọc mã nguồn
-  pages: write        # Quyền ghi/xuất bản lên Pages
-  id-token: write     # Quyền xác thực danh tính bảo mật
+  contents: read
+  pages: write
+  id-token: write
 
-# Quản lý hàng chờ triển khai (Chỉ chạy bản mới nhất, hủy các bản cũ đang chờ)
+# Đảm bảo chỉ có một tiến trình chạy tại một thời điểm
 concurrency:
   group: "pages"
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
-  deploy-love-site:
-    # Định nghĩa môi trường chạy cho GitHub
+  deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    
     runs-on: ubuntu-latest
-    
     steps:
-      - name: 📂 Bước 1: Lấy mã nguồn từ Repository
+      - name: 📥 Checkout Code
         uses: actions/checkout@v4
 
-      - name: ⚙️ Bước 2: Khởi tạo cấu hình GitHub Pages
-        uses: actions/configure-pages@v5
+      - name: 🌐 Setup GitHub Pages
+        uses: actions/configure-pages@v4
 
-      - name: 📦 Bước 3: Đóng gói tài nguyên (Artifact)
+      - name: 📦 Upload Artifacts
         uses: actions/upload-pages-artifact@v3
         with:
-          # Triển khai toàn bộ file tại thư mục gốc (nơi chứa index.html)
+          # Deploy toàn bộ thư mục hiện tại (chứa file index.html)
           path: '.'
 
-      - name: 🚀 Bước 4: Chạy tiến trình xuất bản lên Internet
+      - name: 🚀 Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: ✨ Deployment Status
+        run: |
+          echo "Thiên đình báo tin: Vũ trụ của Phương Anh đã online!"
+          echo "Địa chỉ truy cập: ${{ steps.deployment.outputs.page_url }}"
