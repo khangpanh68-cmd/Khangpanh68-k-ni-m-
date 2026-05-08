@@ -3,178 +3,227 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SUPREME LOVE 2026 | VĨNH LONG ❤️ TP.HCM</title>
+    <title>SUPREME LOVE 2026 | AUTOPILOT V3</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Orbitron:wght@400;900&family=Quicksand:wght@300;600&display=swap" rel="stylesheet">
     
     <style>
-        :root { --gold: #fcc201; --pink: #ff4d6d; --red: #800f2f; --ultra-hd: #00f2ff; }
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        :root { 
+            --gold: #fcc201; --pink: #ff4d6d; --red: #800f2f; --ultra-hd: #00f2ff;
+            --dynamic-color: var(--ultra-hd); 
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; user-select: none; }
         body { height: 100vh; background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%); overflow: hidden; font-family: 'Quicksand', sans-serif; color: white; }
 
-        /* 📡 RADAR VỆ TINH VĨNH LONG - TP.HCM */
+        /* GIỮ NGUYÊN HỆ THỐNG RADAR CŨ */
         .radar-container {
-            width: 95%; max-width: 450px; height: 220px; margin: 15px auto;
-            background: rgba(0, 0, 0, 0.8); border: 2px solid var(--ultra-hd);
+            width: 95%; max-width: 450px; height: 210px; margin: 10px auto;
+            background: rgba(0, 0, 0, 0.8); border: 2px solid var(--dynamic-color);
             border-radius: 30px; position: relative; overflow: hidden;
-            box-shadow: 0 0 40px rgba(0, 242, 255, 0.3);
+            box-shadow: 0 0 30px var(--dynamic-color); transition: 1.5s;
         }
-        .map-overlay { position: absolute; inset: 0; opacity: 0.3; background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png'); }
-        .marker { position: absolute; width: 12px; height: 12px; border-radius: 50%; z-index: 5; }
+        .map-overlay { position: absolute; inset: 0; opacity: 0.15; background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png'); }
+        .marker { position: absolute; width: 12px; height: 12px; border-radius: 50%; z-index: 5; animation: pulse 2s infinite; }
         .vinh-long { top: 70%; left: 35%; background: var(--gold); box-shadow: 0 0 20px var(--gold); }
         .tp-hcm { top: 40%; left: 65%; background: var(--pink); box-shadow: 0 0 20px var(--pink); }
-        .label { position: absolute; font-family: 'Orbitron'; font-size: 0.6rem; color: white; white-space: nowrap; }
-        .laser-line { position: absolute; height: 2px; background: linear-gradient(90deg, var(--gold), var(--pink)); box-shadow: 0 0 15px var(--ultra-hd); transform-origin: left center; z-index: 4; animation: beam 2s infinite; }
+        .laser-line { position: absolute; height: 2px; background: linear-gradient(90deg, var(--gold), var(--pink)); box-shadow: 0 0 15px var(--dynamic-color); transform-origin: left center; z-index: 4; width: 145px; left: 37%; top: 72%; transform: rotate(-48deg); animation: beam 2s infinite; }
 
-        /* ⏰ ĐỒNG HỒ & NGÀY THÁNG VIP (NEW ADDED) */
-        .clock-box { text-align: center; margin-top: 10px; font-family: 'Orbitron'; }
-        #digital-clock { font-size: 2.8rem; font-weight: 900; color: white; text-shadow: 0 0 20px var(--ultra-hd); line-height: 1; }
-        #date-box { font-size: 0.9rem; color: var(--gold); letter-spacing: 3px; margin-top: 10px; font-weight: bold; }
+        /* TỰ ĐỘNG THÔNG TIN */
+        .status-bar { font-family: 'Orbitron'; font-size: 0.55rem; color: var(--dynamic-color); text-align: center; letter-spacing: 3px; margin-bottom: 5px; }
+        #meet-countdown { font-family: 'Orbitron'; font-size: 0.7rem; color: var(--pink); margin-bottom: 8px; font-weight: bold; }
 
-        /* 👑 THỐNG KÊ NGÀY YÊU */
-        #main-app { display: none; opacity: 0; height: 100vh; flex-direction: column; align-items: center; justify-content: center; transition: 1.5s ease; }
-        .stats-box { text-align: center; margin: 15px 0; }
-        .days-big { font-family: 'Orbitron'; font-size: 5.5rem; font-weight: 900; color: white; text-shadow: 0 0 30px var(--gold); line-height: 1; }
-        
-        /* 📜 THÁNH CHỈ & HIỆU ỨNG */
-        .scroll-btn { width: 260px; padding: 15px; background: linear-gradient(45deg, var(--red), #ff4d6d); border: 2px solid var(--gold); border-radius: 50px; font-family: 'Orbitron'; color: var(--gold); cursor: pointer; text-align: center; box-shadow: 0 0 25px var(--red); font-size: 0.9rem; font-weight: 900; }
+        /* ĐỒNG HỒ & NGÀY YÊU */
+        #digital-clock { font-family: 'Orbitron'; font-size: 2.5rem; font-weight: 900; text-shadow: 0 0 20px var(--dynamic-color); line-height: 1; }
+        .days-big { font-family: 'Orbitron'; font-size: 5.2rem; font-weight: 900; color: white; text-shadow: 0 0 30px var(--gold); line-height: 1; }
+
+        /* NHIỆM VỤ TỰ ĐỘNG */
+        .quest-box { 
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px; border-radius: 20px; margin: 10px auto; width: 85%; max-width: 380px; text-align: center;
+        }
+
+        /* NÚT BẤM */
+        .btn-main { padding: 12px 30px; background: linear-gradient(45deg, var(--red), #ff4d6d); border: 2px solid var(--gold); border-radius: 50px; font-family: 'Orbitron'; color: var(--gold); cursor: pointer; font-size: 0.75rem; font-weight: 900; box-shadow: 0 0 20px var(--red); }
+
+        @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.3); opacity: 0.6; } }
+        @keyframes beam { 0%, 100% { opacity: 0.2; } 50% { opacity: 1; } }
         .firework { position: fixed; pointer-events: none; border-radius: 50%; z-index: 10002; }
-        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.98); display: none; justify-content: center; align-items: center; z-index: 10001; }
-        .scroll-content { background: #fff9e6; width: 90%; max-width: 450px; padding: 25px; border-radius: 10px; border: 8px double var(--red); color: #222; }
-
-        @keyframes beam { 0% { opacity: 0.3; } 50% { opacity: 1; } 100% { opacity: 0.3; } }
-        @keyframes pulse-gold { 0% { transform: scale(1); } 50% { transform: scale(1.5); } 100% { transform: scale(1); } }
+        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.96); display: none; justify-content: center; align-items: center; z-index: 10001; backdrop-filter: blur(10px); }
+        .scroll-content { background: #fff; width: 90%; max-width: 400px; padding: 30px; border-radius: 20px; border: 6px double var(--red); color: #222; text-align: center; }
     </style>
 </head>
 <body onclick="spawnFirework(event)">
 
     <div id="gate" style="position: fixed; inset: 0; background: black; z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-        <div onclick="unlockVip()" style="padding: 20px 40px; border: 3px solid var(--gold); color: var(--gold); font-family: 'Orbitron'; font-size: 1.2rem; cursor: pointer; border-radius: 10px; box-shadow: 0 0 30px var(--gold);">
-            Gửi Cục Vàng 💍👑
+        <div onclick="startApp()" style="padding: 20px 40px; border: 2px solid var(--gold); color: var(--gold); font-family: 'Orbitron'; font-size: 1.1rem; cursor: pointer; border-radius: 10px; box-shadow: 0 0 25px var(--gold);">
+            GỬI CỤC VÀNG ❤️
         </div>
-        <p style="margin-top: 20px; font-family: 'Orbitron'; letter-spacing: 5px; font-size: 0.6rem; opacity: 0.7;">Cục Vàng Dễ Thương♥️</p>
+        <p style="margin-top: 20px; font-family: 'Orbitron'; font-size: 0.5rem; color: white; opacity: 0.5; letter-spacing: 4px;">INITIALIZING LOVE_CORE 2026</p>
     </div>
 
     <audio id="bgm" loop><source src="https://files.catbox.moe/6qjxys" type="audio/mpeg"></audio>
 
-    <div id="main-app">
+    <div id="main-app" style="display: none; opacity: 0; flex-direction: column; align-items: center; justify-content: center; height: 100vh; transition: 1s;">
+        
+        <div class="status-bar" id="sys-msg">SYSTEM: CONNECTED</div>
+
         <div class="radar-container">
             <div class="map-overlay"></div>
-            <div class="marker vinh-long" style="animation: pulse-gold 2s infinite;"></div>
-            <div class="label" style="top: 75%; left: 30%;">VĨNH LONG</div>
-            <div id="laser" class="laser-line"></div>
-            <div class="marker tp-hcm" style="animation: pulse-gold 1.5s infinite;"></div>
-            <div class="label" style="top: 35%; left: 60%;">TP. HỒ CHÍ MINH</div>
-            <div style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); font-family: 'Orbitron'; color: var(--ultra-hd); font-size: 0.6rem; width: 100%; text-align: center;">
-                Radar Vệ Tinh 2026
-            </div>
+            <div class="marker vinh-long"></div>
+            <div class="laser-line"></div>
+            <div class="marker tp-hcm"></div>
+            <div style="position: absolute; bottom: 8px; width: 100%; text-align: center; font-family: 'Orbitron'; font-size: 0.45rem; color: var(--dynamic-color); opacity: 0.7;">VĨNH LONG 📡 TP. HỒ CHÍ MINH</div>
         </div>
 
-        <div class="clock-box">
+        <div id="meet-countdown">ĐANG ĐỊNH VỊ NGÀY GẶP...</div>
+
+        <div style="text-align: center;">
             <div id="digital-clock">00:00:00</div>
-            <div id="date-box">THỨ HAI, 01/01/2026</div>
+            <div id="date-text" style="font-family: 'Orbitron'; font-size: 0.75rem; color: var(--gold); margin-top: 5px; letter-spacing: 2px;"></div>
         </div>
 
-        <div class="stats-box">
-            <div id="days" class="days-big">0</div>
-            <p style="font-family: 'Orbitron'; letter-spacing: 4px; color: var(--gold); font-size: 0.8rem; margin-top: 5px;">Ngày Hạnh Phúc Của Bé Yêu♥️</p>
+        <div style="text-align: center; margin: 15px 0;">
+            <div id="days-val" class="days-big">0</div>
+            <p style="font-family: 'Orbitron'; color: var(--gold); font-size: 0.7rem; letter-spacing: 3px;">NGÀY HẠNH PHÚC BÊN KHANG</p>
         </div>
 
-        <div class="scroll-btn" onclick="openUltraScroll()">
-            <i class="fa-solid fa-crown"></i> TIẾP CHỈ 
+        <div class="quest-box">
+            <div style="font-family: 'Orbitron'; font-size: 0.55rem; color: var(--pink); margin-bottom: 5px;"><i class="fa-solid fa-bolt"></i> NHIỆM VỤ TỰ ĐỘNG</div>
+            <p id="quest-content" style="font-size: 0.85rem; font-style: italic;"></p>
+            <button onclick="questDone()" style="margin-top: 8px; background: none; border: 1px solid var(--gold); color: var(--gold); padding: 3px 12px; border-radius: 10px; font-size: 0.55rem; cursor: pointer; font-family: 'Orbitron';">DONE</button>
         </div>
+
+        <button class="btn-main" onclick="openScroll()">NHẬN CHỈ DỤ</button>
     </div>
 
     <div id="overlay" class="overlay">
         <div class="scroll-content">
-            <h1 style="font-family: 'Dancing Script'; color: var(--red); text-align: center; font-size: 2.2rem;">Gửi Phương Anh ❤️</h1>
-            <div style="margin: 15px 0; font-style: italic; font-weight: 600; text-align: center; line-height: 1.6;">
-                <p>"Dù Vĩnh Long cách TP.HCM bao nhiêu cây số, tình yêu của anh vẫn vượt mọi radar để tìm thấy em."</p>
-            </div>
-            <hr style="border: 1px dashed var(--red);">
-            <div style="text-align: center; margin-top: 15px;">
-                <p style="color: #c9184a; font-weight: 900; font-family: 'Orbitron'; font-size: 0.7rem;">Lời Nhắc Gửi Bé Yêu ♥️:</p>
-                <p style="font-size: 0.9rem;">Yêu Khang thật nhiều và luôn hạnh phúc nhé!</p>
-            </div>
-            <center><button onclick="closeUltraScroll()" style="margin-top: 20px; background: var(--red); color: white; border: none; padding: 10px 30px; border-radius: 25px; font-weight: bold; cursor: pointer;">TUÂN CHỈ!</button></center>
+            <h2 id="modal-title" style="font-family: 'Dancing Script'; font-size: 2.2rem; color: var(--red);"></h2>
+            <p id="modal-msg" style="margin: 20px 0; font-weight: 600; line-height: 1.6; color: #444;"></p>
+            <hr style="border: 0.5px dashed var(--red);">
+            <div id="time-greeting" style="font-family: 'Orbitron'; font-size: 0.6rem; color: #c9184a; margin-top: 15px;"></div>
+            <button onclick="closeScroll()" style="margin-top: 25px; background: var(--red); color: white; border: none; padding: 10px 40px; border-radius: 30px; font-weight: bold; cursor: pointer;">TUÂN CHỈ</button>
         </div>
     </div>
 
     <script>
-        function unlockVip() {
-            document.getElementById('bgm').play();
+        const MEMORIES = [
+            {m: 1, d: 21, name: "ANNIVERSARY: NGÀY YÊU ❤️"},
+            {m: 2, d: 14, name: "VALENTINE DAY 🍫"},
+            {m: 3, d: 8, name: "WOMAN'S DAY 💐"},
+            {m: 10, d: 20, name: "VIETNAM WOMAN'S DAY 🌹"},
+            {m: 12, d: 25, name: "MERRY CHRISTMAS 🎄"}
+        ];
+
+        const QUESTS = [
+            "Nhắn tin cho Khang bảo 'Em nhớ Khang' ngay nha.",
+            "Chụp 1 tấm ảnh nụ cười của em gửi Khang xem.",
+            "Uống một cốc nước thật lớn để da luôn xinh nè.",
+            "Kể Khang nghe 1 món em muốn ăn nhất lúc này.",
+            "Gửi cho Khang 1 sticker đáng yêu nhất của em.",
+            "Nói thầm với gương 'Mình là người xinh đẹp nhất'."
+        ];
+
+        const MESSAGES = [
+            "Hạnh phúc là khi được nhìn thấy em mỗi ngày qua màn hình và mong ngày gặp mặt.",
+            "Dù radar có quét cả thế giới, anh cũng chỉ định vị được mỗi mình em.",
+            "Phương Anh ơi, em là món quà tuyệt vời nhất mà Khang có được.",
+            "Khoảng cách địa lý không là gì khi hai trái tim luôn hướng về nhau.",
+            "Cảm ơn em vì đã kiên nhẫn và yêu anh nhiều như thế."
+        ];
+
+        function startApp() {
+            document.getElementById('bgm').play().catch(e => console.log("Audio block"));
             document.getElementById('gate').style.opacity = '0';
             setTimeout(() => {
                 document.getElementById('gate').style.display = 'none';
-                document.getElementById('main-app').style.display = 'flex';
-                setTimeout(() => {
-                    document.getElementById('main-app').style.opacity = '1';
-                    connectRadar();
-                }, 100);
-            }, 1000);
-            updateAll();
-            setInterval(updateAll, 1000);
+                const main = document.getElementById('main-app');
+                main.style.display = 'flex';
+                setTimeout(() => main.style.opacity = '1', 50);
+                autoEngine();
+            }, 800);
         }
 
-        function updateAll() {
-            // Cập nhật Đồng hồ & Lịch
+        function autoEngine() {
             const now = new Date();
-            const h = String(now.getHours()).padStart(2, '0');
-            const m = String(now.getMinutes()).padStart(2, '0');
-            const s = String(now.getSeconds()).padStart(2, '0');
-            document.getElementById('digital-clock').innerText = `${h}:${m}:${s}`;
+            const d = now.getDate();
+            const m = now.getMonth() + 1;
+            const h = now.getHours();
 
-            const daysWeek = ["CHỦ NHẬT", "THỨ HAI", "THỨ BA", "THỨ TƯ", "THỨ NĂM", "THỨ SÁU", "THỨ BẢY"];
-            const d = String(now.getDate()).padStart(2, '0');
-            const mon = String(now.getMonth() + 1).padStart(2, '0');
-            const y = now.getFullYear();
-            document.getElementById('date-box').innerText = `${daysWeek[now.getDay()]}, ${d}/${mon}/${y}`;
+            // 1. Kiểm tra ngày kỷ niệm tự động
+            const special = MEMORIES.find(x => x.m === m && x.d === d);
+            if(special) {
+                document.documentElement.style.setProperty('--dynamic-color', '#ff4d6d');
+                document.getElementById('sys-msg').innerText = special.name;
+            }
 
-            // Cập nhật Ngày yêu (21/01/2023)
-            const start = new Date('2023-01-21');
-            const diff = Math.floor((now - start) / (1000 * 60 * 60 * 24));
-            document.getElementById('days').innerText = diff;
+            // 2. Đếm ngược tự động đến Thứ 7 hàng tuần
+            let nextSat = new Date();
+            nextSat.setDate(now.getDate() + (6 - now.getDay() + 7) % 7);
+            if(now.getDay() === 6) {
+                document.getElementById('meet-countdown').innerText = "HÔM NAY LÀ NGÀY GẶP NHAU! ❤️";
+            } else {
+                const diff = Math.ceil((nextSat - now) / 86400000);
+                document.getElementById('meet-countdown').innerText = `CÒN ${diff} NGÀY NỮA LÀ ĐẾN THỨ BẢY GẶP EM ❤️`;
+            }
+
+            // 3. Nhiệm vụ hàng ngày (Tự đổi 365 ngày)
+            const dayIdx = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 86400000);
+            document.getElementById('quest-content').innerText = QUESTS[dayIdx % QUESTS.length];
+
+            updateClock();
+            setInterval(updateClock, 1000);
         }
 
-        function connectRadar() {
-            const laser = document.getElementById('laser');
-            laser.style.width = '145px';
-            laser.style.left = '37%';
-            laser.style.top = '72%';
-            laser.style.transform = 'rotate(-48deg)';
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('digital-clock').innerText = now.toLocaleTimeString('vi-VN', {hour12: false});
+            document.getElementById('date-text').innerText = now.toLocaleDateString('vi-VN', {weekday: 'long', day: '2-digit', month: '2-digit', year: 'numeric'}).toUpperCase();
+            
+            const start = new Date('2023-01-21');
+            document.getElementById('days-val').innerText = Math.floor((now - start) / 86400000);
+        }
+
+        function openScroll() {
+            const h = new Date().getHours();
+            let greet = "";
+            if(h < 11) greet = "CHÀO BUỔI SÁNG, CÔNG CHÚA CỦA ANH ☀️";
+            else if(h < 17) greet = "BUỔI TRƯA NGOAN NHÉ, ĐỪNG QUÊN ĂN CƠM 🍱";
+            else if(h < 22) greet = "BUỔI TỐI ẤM ÁP VÀ NHỚ KHANG NHÉ ❤️";
+            else greet = "CHÚC BÉ YÊU NGỦ THẬT NGON VÀ MƠ THẤY ANH 🌙";
+
+            document.getElementById('modal-title').innerText = "Gửi Phương Anh ❤️";
+            document.getElementById('modal-msg').innerText = MESSAGES[new Date().getDate() % MESSAGES.length];
+            document.getElementById('time-greeting').innerText = greet;
+            document.getElementById('overlay').style.display = 'flex';
+        }
+
+        function closeScroll() { document.getElementById('overlay').style.display = 'none'; }
+
+        function questDone() {
+            for(let i=0; i<3; i++) setTimeout(() => spawnFirework({clientX: window.innerWidth/2, clientY: window.innerHeight/2}), i*350);
+            alert("Cục Vàng giỏi quá! Khang đã ghi nhận ❤️");
         }
 
         function spawnFirework(e) {
             const colors = ['#fcc201', '#ff4d6d', '#00f2ff', '#ffffff'];
-            for (let i = 0; i < 35; i++) {
+            for (let i = 0; i < 30; i++) {
                 const p = document.createElement('div');
                 p.className = 'firework';
-                p.style.left = e.clientX + 'px';
-                p.style.top = e.clientY + 'px';
-                p.style.width = Math.random() * 5 + 'px';
-                p.style.height = p.style.width;
+                p.style.left = e.clientX + 'px'; p.style.top = e.clientY + 'px';
+                p.style.width = Math.random() * 6 + 'px'; p.style.height = p.style.width;
                 p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
                 document.body.appendChild(p);
-
-                const angle = Math.random() * Math.PI * 2;
-                const speed = Math.random() * 8 + 4;
+                const angle = Math.random() * Math.PI * 2, speed = Math.random() * 7 + 3;
                 let x = 0, y = 0, opacity = 1;
-
                 const move = () => {
-                    x += Math.cos(angle) * speed;
-                    y += Math.sin(angle) * speed;
-                    opacity -= 0.02;
-                    p.style.transform = `translate(${x}px, ${y}px)`;
-                    p.style.opacity = opacity;
-                    if (opacity > 0) requestAnimationFrame(move);
-                    else p.remove();
+                    x += Math.cos(angle) * speed; y += Math.sin(angle) * speed; opacity -= 0.025;
+                    p.style.transform = `translate(${x}px, ${y}px)`; p.style.opacity = opacity;
+                    if (opacity > 0) requestAnimationFrame(move); else p.remove();
                 };
                 requestAnimationFrame(move);
             }
         }
-
-        function openUltraScroll() { document.getElementById('overlay').style.display = 'flex'; }
-        function closeUltraScroll() { document.getElementById('overlay').style.display = 'none'; }
     </script>
 </body>
 </html>
