@@ -2,228 +2,227 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SUPREME LOVE 2026 | AUTOPILOT V3</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>SUPREME LOVE 2026 | AUTOPILOT V64</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Orbitron:wght@400;900&family=Quicksand:wght@300;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Quicksand:wght@300;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     
     <style>
         :root { 
-            --gold: #fcc201; --pink: #ff4d6d; --red: #800f2f; --ultra-hd: #00f2ff;
-            --dynamic-color: var(--ultra-hd); 
+            --gold: #fcc201; --pink: #ff4d6d; --cyan: #00f2ff; --night-blue: #1a2a6c;
+            --sun-color: #ff9d00; --moon-color: #f1f1f1;
+            --dynamic-color: var(--cyan);
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; user-select: none; }
-        body { height: 100vh; background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%); overflow: hidden; font-family: 'Quicksand', sans-serif; color: white; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { height: 100vh; background: #000; overflow: hidden; font-family: 'Quicksand', sans-serif; color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: background 2s; }
 
-        /* GIỮ NGUYÊN HỆ THỐNG RADAR CŨ */
-        .radar-container {
-            width: 95%; max-width: 450px; height: 210px; margin: 10px auto;
-            background: rgba(0, 0, 0, 0.8); border: 2px solid var(--dynamic-color);
-            border-radius: 30px; position: relative; overflow: hidden;
-            box-shadow: 0 0 30px var(--dynamic-color); transition: 1.5s;
+        /* RADAR V64 CELESTIAL */
+        .radar-v64 {
+            width: 280px; height: 280px; border-radius: 50%;
+            position: relative; display: flex; align-items: center; justify-content: center;
+            border: 2px solid var(--dynamic-color);
+            box-shadow: 0 0 40px var(--dynamic-color);
+            transition: 2s ease; z-index: 10;
         }
-        .map-overlay { position: absolute; inset: 0; opacity: 0.15; background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png'); }
-        .marker { position: absolute; width: 12px; height: 12px; border-radius: 50%; z-index: 5; animation: pulse 2s infinite; }
-        .vinh-long { top: 70%; left: 35%; background: var(--gold); box-shadow: 0 0 20px var(--gold); }
-        .tp-hcm { top: 40%; left: 65%; background: var(--pink); box-shadow: 0 0 20px var(--pink); }
-        .laser-line { position: absolute; height: 2px; background: linear-gradient(90deg, var(--gold), var(--pink)); box-shadow: 0 0 15px var(--dynamic-color); transform-origin: left center; z-index: 4; width: 145px; left: 37%; top: 72%; transform: rotate(-48deg); animation: beam 2s infinite; }
+        .celestial-icon { position: absolute; top: -20px; font-size: 2rem; filter: drop-shadow(0 0 10px white); z-index: 11; transition: 1s; }
+        
+        .marker { position: absolute; width: 14px; height: 14px; border-radius: 50%; z-index: 12; }
+        .vinh-long { top: 70%; left: 25%; background: var(--gold); box-shadow: 0 0 20px var(--gold); }
+        .tp-hcm { top: 30%; left: 75%; background: var(--pink); box-shadow: 0 0 20px var(--pink); }
 
-        /* TỰ ĐỘNG THÔNG TIN */
-        .status-bar { font-family: 'Orbitron'; font-size: 0.55rem; color: var(--dynamic-color); text-align: center; letter-spacing: 3px; margin-bottom: 5px; }
-        #meet-countdown { font-family: 'Orbitron'; font-size: 0.7rem; color: var(--pink); margin-bottom: 8px; font-weight: bold; }
-
-        /* ĐỒNG HỒ & NGÀY YÊU */
-        #digital-clock { font-family: 'Orbitron'; font-size: 2.5rem; font-weight: 900; text-shadow: 0 0 20px var(--dynamic-color); line-height: 1; }
-        .days-big { font-family: 'Orbitron'; font-size: 5.2rem; font-weight: 900; color: white; text-shadow: 0 0 30px var(--gold); line-height: 1; }
-
-        /* NHIỆM VỤ TỰ ĐỘNG */
-        .quest-box { 
-            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 12px; border-radius: 20px; margin: 10px auto; width: 85%; max-width: 380px; text-align: center;
+        /* SCANNER */
+        .scan-v64 {
+            position: absolute; width: 50%; height: 2px; background: linear-gradient(90deg, var(--dynamic-color), transparent);
+            left: 50%; top: 50%; transform-origin: left center; animation: rotate 4s linear infinite;
         }
 
-        /* NÚT BẤM */
-        .btn-main { padding: 12px 30px; background: linear-gradient(45deg, var(--red), #ff4d6d); border: 2px solid var(--gold); border-radius: 50px; font-family: 'Orbitron'; color: var(--gold); cursor: pointer; font-size: 0.75rem; font-weight: 900; box-shadow: 0 0 20px var(--red); }
+        /* LIVE COUNTER */
+        .counter-box { text-align: center; margin: 20px 0; }
+        .days-val { font-family: 'Orbitron'; font-size: 5.5rem; font-weight: 900; line-height: 1; text-shadow: 0 0 30px var(--dynamic-color); }
+        .time-live { font-family: 'Orbitron'; font-size: 0.9rem; color: #fff; opacity: 0.6; letter-spacing: 3px; }
 
-        @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.3); opacity: 0.6; } }
-        @keyframes beam { 0%, 100% { opacity: 0.2; } 50% { opacity: 1; } }
-        .firework { position: fixed; pointer-events: none; border-radius: 50%; z-index: 10002; }
-        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.96); display: none; justify-content: center; align-items: center; z-index: 10001; backdrop-filter: blur(10px); }
-        .scroll-content { background: #fff; width: 90%; max-width: 400px; padding: 30px; border-radius: 20px; border: 6px double var(--red); color: #222; text-align: center; }
+        /* MISSION & MESSAGE BOX */
+        .msg-container {
+            width: 88%; padding: 20px; background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 25px;
+            backdrop-filter: blur(15px); text-align: center; margin-bottom: 15px;
+        }
+        .btn-v64 {
+            padding: 15px 40px; border-radius: 50px; border: 1.5px solid var(--dynamic-color);
+            background: transparent; color: var(--dynamic-color); font-family: 'Orbitron';
+            font-weight: 900; font-size: 0.7rem; cursor: pointer; transition: 0.4s;
+        }
+        .btn-v64:active { background: var(--dynamic-color); color: #000; }
+
+        /* ANIMATIONS */
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+        /* MODAL */
+        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: none; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(20px); }
+        .modal-card { width: 85%; background: #fff; padding: 35px 20px; border-radius: 40px; color: #000; text-align: center; position: relative; }
+        .modal-card h2 { font-family: 'Dancing Script'; font-size: 2.5rem; color: var(--pink); }
     </style>
 </head>
-<body onclick="spawnFirework(event)">
+<body>
 
-    <div id="gate" style="position: fixed; inset: 0; background: black; z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-        <div onclick="startApp()" style="padding: 20px 40px; border: 2px solid var(--gold); color: var(--gold); font-family: 'Orbitron'; font-size: 1.1rem; cursor: pointer; border-radius: 10px; box-shadow: 0 0 25px var(--gold);">
-            GỬI CỤC VÀNG ❤️
+    <!-- BACKGROUND EFFECTS -->
+    <div id="sky-effect" style="position: fixed; inset: 0; pointer-events: none;"></div>
+
+    <div id="gate" style="position: fixed; inset: 0; background: #000; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+        <div onclick="initV64()" style="padding: 20px 40px; border: 2px solid var(--cyan); color: var(--cyan); font-family: 'Orbitron'; cursor: pointer; border-radius: 10px; box-shadow: 0 0 30px var(--cyan);">
+            Gửi Bé Yêu ♥️👑
         </div>
-        <p style="margin-top: 20px; font-family: 'Orbitron'; font-size: 0.5rem; color: white; opacity: 0.5; letter-spacing: 4px;">INITIALIZING LOVE_CORE 2026</p>
     </div>
 
     <audio id="bgm" loop><source src="https://files.catbox.moe/6qjxys" type="audio/mpeg"></audio>
 
-    <div id="main-app" style="display: none; opacity: 0; flex-direction: column; align-items: center; justify-content: center; height: 100vh; transition: 1s;">
+    <div id="main-app" style="display: none; opacity: 0; transition: 2s; width: 100%; flex-direction: column; align-items: center;">
         
-        <div class="status-bar" id="sys-msg">SYSTEM: CONNECTED</div>
+        <div id="celestial-label" style="font-family: 'Orbitron'; font-size: 0.6rem; letter-spacing: 5px; margin-bottom: 15px; color: var(--dynamic-color);">SYSTEM: SYNCING...</div>
 
-        <div class="radar-container">
-            <div class="map-overlay"></div>
+        <div class="radar-v64" id="radar">
+            <div id="sun-moon" class="celestial-icon"></div>
+            <div class="scan-v64"></div>
             <div class="marker vinh-long"></div>
-            <div class="laser-line"></div>
             <div class="marker tp-hcm"></div>
-            <div style="position: absolute; bottom: 8px; width: 100%; text-align: center; font-family: 'Orbitron'; font-size: 0.45rem; color: var(--dynamic-color); opacity: 0.7;">VĨNH LONG 📡 TP. HỒ CHÍ MINH</div>
+            <div style="position: absolute; bottom: 30px; font-family: 'Orbitron'; font-size: 0.4rem; opacity: 0.5;">Yêu Bé Phương Anh ♥️👑</div>
         </div>
 
-        <div id="meet-countdown">ĐANG ĐỊNH VỊ NGÀY GẶP...</div>
-
-        <div style="text-align: center;">
-            <div id="digital-clock">00:00:00</div>
-            <div id="date-text" style="font-family: 'Orbitron'; font-size: 0.75rem; color: var(--gold); margin-top: 5px; letter-spacing: 2px;"></div>
+        <div class="counter-box">
+            <div id="days-val" class="days-val">0</div>
+            <div id="time-val" class="time-live">00:00:00</div>
         </div>
 
-        <div style="text-align: center; margin: 15px 0;">
-            <div id="days-val" class="days-big">0</div>
-            <p style="font-family: 'Orbitron'; color: var(--gold); font-size: 0.7rem; letter-spacing: 3px;">NGÀY HẠNH PHÚC BÊN KHANG</p>
+        <div class="msg-container">
+            <p style="font-family: 'Orbitron'; font-size: 0.5rem; color: var(--pink); margin-bottom: 10px;">Nhiệm Vụ</p>
+            <p id="daily-quest" style="font-size: 0.9rem; font-weight: 600;"></p>
         </div>
 
-        <div class="quest-box">
-            <div style="font-family: 'Orbitron'; font-size: 0.55rem; color: var(--pink); margin-bottom: 5px;"><i class="fa-solid fa-bolt"></i> NHIỆM VỤ TỰ ĐỘNG</div>
-            <p id="quest-content" style="font-size: 0.85rem; font-style: italic;"></p>
-            <button onclick="questDone()" style="margin-top: 8px; background: none; border: 1px solid var(--gold); color: var(--gold); padding: 3px 12px; border-radius: 10px; font-size: 0.55rem; cursor: pointer; font-family: 'Orbitron';">DONE</button>
-        </div>
-
-        <button class="btn-main" onclick="openScroll()">NHẬN CHỈ DỤ</button>
+        <button class="btn-v64" onclick="openSleepMsg()">Chúc Bé Ngon Ngủ ♥️👑</button>
     </div>
 
     <div id="overlay" class="overlay">
-        <div class="scroll-content">
-            <h2 id="modal-title" style="font-family: 'Dancing Script'; font-size: 2.2rem; color: var(--red);"></h2>
-            <p id="modal-msg" style="margin: 20px 0; font-weight: 600; line-height: 1.6; color: #444;"></p>
-            <hr style="border: 0.5px dashed var(--red);">
-            <div id="time-greeting" style="font-family: 'Orbitron'; font-size: 0.6rem; color: #c9184a; margin-top: 15px;"></div>
-            <button onclick="closeScroll()" style="margin-top: 25px; background: var(--red); color: white; border: none; padding: 10px 40px; border-radius: 30px; font-weight: bold; cursor: pointer;">TUÂN CHỈ</button>
+        <div class="modal-card">
+            <h2 id="modal-title"></h2>
+            <p id="modal-text" style="margin: 20px 0; font-weight: 600; line-height: 1.6;"></p>
+            <div id="modal-extra" style="font-size: 0.6rem; color: #888; font-family: 'Orbitron'; border-top: 1px solid #eee; padding-top: 10px;"></div>
+            <button onclick="closeMsg()" style="margin-top: 25px; width: 100%; padding: 15px; border-radius: 50px; background: #000; color: #fff; border: none; font-family: 'Orbitron';">Yêu Bé ❤️</button>
         </div>
     </div>
 
     <script>
-        const MEMORIES = [
-            {m: 1, d: 21, name: "ANNIVERSARY: NGÀY YÊU ❤️"},
-            {m: 2, d: 14, name: "VALENTINE DAY 🍫"},
-            {m: 3, d: 8, name: "WOMAN'S DAY 💐"},
-            {m: 10, d: 20, name: "VIETNAM WOMAN'S DAY 🌹"},
-            {m: 12, d: 25, name: "MERRY CHRISTMAS 🎄"}
+        const HOLIDAYS = {
+            "01-01": "Tết Dương Lịch: Năm mới Khang vẫn sẽ yêu Anh nhiều nhất!",
+            "02-14": "Valentine: Thế giới có 8 tỷ người, nhưng radar của Khang chỉ hiện mỗi tên em.",
+            "03-08": "8/3: Chúc công chúa của Khang hôm nay rạng rỡ như ánh mặt trời!",
+            "10-20": "20/10: Cảm ơn em đã xuất hiện và làm đẹp thế giới của Khang.",
+            "12-25": "Giáng Sinh: Giáng sinh ấm áp nhé, em là món quà lớn nhất của anh.",
+            "01-21": "KỶ NIỆM NGÀY YÊU: Mãi bên nhau như thế này em nhé ❤️"
+        };
+
+        const GOODNIGHT_BASE = [
+            "Chúc em ngủ ngon, mơ thấy Khang và những điều ngọt ngào nhất.",
+            "Ngủ đi thôi bé ơi, Khang đã canh giữ radar cho em rồi.",
+            "Chúc em có một giấc mơ 4K siêu nét, trong đó có Khang cầm tay em.",
+            "Hôm nay em đã vất vả rồi, ngủ thật ngon để mai lại xinh đẹp nhé.",
+            "Nếu đêm nay thấy lạnh, hãy nhớ rằng tình cảm của Khang luôn sưởi ấm em.",
+            "Ngủ ngon nhé, cục vàng của Khang. Hẹn gặp em trong mơ!",
+            "Khang vừa gửi một nụ hôn qua vệ tinh, em nhận được chưa?"
         ];
 
-        const QUESTS = [
-            "Nhắn tin cho Khang bảo 'Em nhớ Khang' ngay nha.",
-            "Chụp 1 tấm ảnh nụ cười của em gửi Khang xem.",
-            "Uống một cốc nước thật lớn để da luôn xinh nè.",
-            "Kể Khang nghe 1 món em muốn ăn nhất lúc này.",
-            "Gửi cho Khang 1 sticker đáng yêu nhất của em.",
-            "Nói thầm với gương 'Mình là người xinh đẹp nhất'."
-        ];
-
-        const MESSAGES = [
-            "Hạnh phúc là khi được nhìn thấy em mỗi ngày qua màn hình và mong ngày gặp mặt.",
-            "Dù radar có quét cả thế giới, anh cũng chỉ định vị được mỗi mình em.",
-            "Phương Anh ơi, em là món quà tuyệt vời nhất mà Khang có được.",
-            "Khoảng cách địa lý không là gì khi hai trái tim luôn hướng về nhau.",
-            "Cảm ơn em vì đã kiên nhẫn và yêu anh nhiều như thế."
-        ];
-
-        function startApp() {
-            document.getElementById('bgm').play().catch(e => console.log("Audio block"));
+        function initV64() {
+            document.getElementById('bgm').play().catch(() => {});
             document.getElementById('gate').style.opacity = '0';
             setTimeout(() => {
                 document.getElementById('gate').style.display = 'none';
-                const main = document.getElementById('main-app');
-                main.style.display = 'flex';
-                setTimeout(() => main.style.opacity = '1', 50);
-                autoEngine();
+                document.getElementById('main-app').style.display = 'flex';
+                setTimeout(() => document.getElementById('main-app').style.opacity = '1', 50);
+                updateCelestial();
+                runCounters();
             }, 800);
         }
 
-        function autoEngine() {
-            const now = new Date();
-            const d = now.getDate();
-            const m = now.getMonth() + 1;
-            const h = now.getHours();
-
-            // 1. Kiểm tra ngày kỷ niệm tự động
-            const special = MEMORIES.find(x => x.m === m && x.d === d);
-            if(special) {
-                document.documentElement.style.setProperty('--dynamic-color', '#ff4d6d');
-                document.getElementById('sys-msg').innerText = special.name;
-            }
-
-            // 2. Đếm ngược tự động đến Thứ 7 hàng tuần
-            let nextSat = new Date();
-            nextSat.setDate(now.getDate() + (6 - now.getDay() + 7) % 7);
-            if(now.getDay() === 6) {
-                document.getElementById('meet-countdown').innerText = "HÔM NAY LÀ NGÀY GẶP NHAU! ❤️";
-            } else {
-                const diff = Math.ceil((nextSat - now) / 86400000);
-                document.getElementById('meet-countdown').innerText = `CÒN ${diff} NGÀY NỮA LÀ ĐẾN THỨ BẢY GẶP EM ❤️`;
-            }
-
-            // 3. Nhiệm vụ hàng ngày (Tự đổi 365 ngày)
-            const dayIdx = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 86400000);
-            document.getElementById('quest-content').innerText = QUESTS[dayIdx % QUESTS.length];
-
-            updateClock();
-            setInterval(updateClock, 1000);
-        }
-
-        function updateClock() {
-            const now = new Date();
-            document.getElementById('digital-clock').innerText = now.toLocaleTimeString('vi-VN', {hour12: false});
-            document.getElementById('date-text').innerText = now.toLocaleDateString('vi-VN', {weekday: 'long', day: '2-digit', month: '2-digit', year: 'numeric'}).toUpperCase();
-            
-            const start = new Date('2023-01-21');
-            document.getElementById('days-val').innerText = Math.floor((now - start) / 86400000);
-        }
-
-        function openScroll() {
+        function updateCelestial() {
             const h = new Date().getHours();
-            let greet = "";
-            if(h < 11) greet = "CHÀO BUỔI SÁNG, CÔNG CHÚA CỦA ANH ☀️";
-            else if(h < 17) greet = "BUỔI TRƯA NGOAN NHÉ, ĐỪNG QUÊN ĂN CƠM 🍱";
-            else if(h < 22) greet = "BUỔI TỐI ẤM ÁP VÀ NHỚ KHANG NHÉ ❤️";
-            else greet = "CHÚC BÉ YÊU NGỦ THẬT NGON VÀ MƠ THẤY ANH 🌙";
+            const radar = document.getElementById('radar');
+            const icon = document.getElementById('sun-moon');
+            const label = document.getElementById('celestial-label');
+            const sky = document.getElementById('sky-effect');
 
-            document.getElementById('modal-title').innerText = "Gửi Phương Anh ❤️";
-            document.getElementById('modal-msg').innerText = MESSAGES[new Date().getDate() % MESSAGES.length];
-            document.getElementById('time-greeting').innerText = greet;
+            if (h >= 6 && h < 18) {
+                // CHẾ ĐỘ BAN NGÀY
+                document.body.style.background = "radial-gradient(circle at center, #2c3e50 0%, #000 100%)";
+                document.documentElement.style.setProperty('--dynamic-color', 'var(--sun-color)');
+                icon.innerHTML = "☀️";
+                label.innerText = "SYSTEM: SOLAR_MODE ACTIVE";
+            } else {
+                // CHẾ ĐỘ BAN ĐÊM
+                document.body.style.background = "radial-gradient(circle at center, #1a2a6c 0%, #000 100%)";
+                document.documentElement.style.setProperty('--dynamic-color', 'var(--cyan)');
+                icon.innerHTML = "🌙";
+                label.innerText = "Cục Vàng Phương Anh";
+                spawnStars();
+            }
+        }
+
+        function spawnStars() {
+            const sky = document.getElementById('sky-effect');
+            for(let i=0; i<50; i++) {
+                const star = document.createElement('div');
+                star.style.position = 'absolute';
+                star.style.width = '2px'; star.style.height = '2px';
+                star.style.background = '#fff';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.opacity = Math.random();
+                star.style.borderRadius = '50%';
+                sky.appendChild(star);
+            }
+        }
+
+        function runCounters() {
+            const start = new Date('2023-01-21T00:00:00');
+            setInterval(() => {
+                const now = new Date();
+                const diff = now - start;
+                document.getElementById('days-val').innerText = Math.floor(diff / 86400000);
+                document.getElementById('time-val').innerText = now.toLocaleTimeString('vi-VN');
+                
+                // Mission Update
+                const quests = ["Nhắn tin bảo Khang em nhớ Khang đi!", "Uống 1 cốc nước lớn nhé.", "Mỉm cười trước gương 3 giây nào.", "Kể Khang nghe 1 điều vui hôm nay."];
+                document.getElementById('daily-quest').innerText = quests[now.getDate() % quests.length];
+            }, 1000);
+        }
+
+        function openSleepMsg() {
+            const now = new Date();
+            const dateStr = String(now.getMonth() + 1).padStart(2, '0') + "-" + String(now.getDate()).padStart(2, '0');
+            let title = "Gửi Phương Anh ❤️";
+            let message = "";
+
+            // Kiểm tra ngày lễ
+            if (HOLIDAYS[dateStr]) {
+                title = "HÔM NAY ĐẶC BIỆT ✨";
+                message = HOLIDAYS[dateStr];
+            } else {
+                // Tin nhắn 365 ngày (Lấy ngẫu nhiên theo ngày trong năm)
+                const dayOfYear = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 86400000);
+                message = GOODNIGHT_BASE[dayOfYear % GOODNIGHT_BASE.length];
+                
+                const hr = now.getHours();
+                if(hr >= 6 && hr < 18) {
+                    message = "Chúc em buổi sáng/trưa tràn đầy năng lượng! Đừng quên là Khang luôn nghĩ về em.";
+                }
+            }
+
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-text').innerText = message;
+            document.getElementById('modal-extra').innerText = "Ngày Kỷ Niệm Của Chúng Ta 21/01/2023-" + (now.getDate() * 123);
             document.getElementById('overlay').style.display = 'flex';
         }
 
-        function closeScroll() { document.getElementById('overlay').style.display = 'none'; }
-
-        function questDone() {
-            for(let i=0; i<3; i++) setTimeout(() => spawnFirework({clientX: window.innerWidth/2, clientY: window.innerHeight/2}), i*350);
-            alert("Cục Vàng giỏi quá! Khang đã ghi nhận ❤️");
-        }
-
-        function spawnFirework(e) {
-            const colors = ['#fcc201', '#ff4d6d', '#00f2ff', '#ffffff'];
-            for (let i = 0; i < 30; i++) {
-                const p = document.createElement('div');
-                p.className = 'firework';
-                p.style.left = e.clientX + 'px'; p.style.top = e.clientY + 'px';
-                p.style.width = Math.random() * 6 + 'px'; p.style.height = p.style.width;
-                p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                document.body.appendChild(p);
-                const angle = Math.random() * Math.PI * 2, speed = Math.random() * 7 + 3;
-                let x = 0, y = 0, opacity = 1;
-                const move = () => {
-                    x += Math.cos(angle) * speed; y += Math.sin(angle) * speed; opacity -= 0.025;
-                    p.style.transform = `translate(${x}px, ${y}px)`; p.style.opacity = opacity;
-                    if (opacity > 0) requestAnimationFrame(move); else p.remove();
-                };
-                requestAnimationFrame(move);
-            }
-        }
+        function closeMsg() { document.getElementById('overlay').style.display = 'none'; }
     </script>
 </body>
 </html>
