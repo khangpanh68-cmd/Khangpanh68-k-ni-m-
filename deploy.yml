@@ -1,46 +1,40 @@
-name: 🚀 DEPLOY SUPREME LOVE 2026
+name: Deploy Supreme Love Autopilot V64
 
 on:
   push:
-    branches: [ main ] # Tự động chạy khi bạn push code vào nhánh main
-  workflow_dispatch:   # Cho phép chạy thủ công từ GitHub giao diện
+    branches:
+      - main  # Tự động chạy khi bạn push code lên nhánh main
+  workflow_dispatch: # Cho phép bạn bấm nút chạy thủ công trong GitHub Actions
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
-  build-and-deploy:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    
     steps:
-      - name: 📥 Checkout Code
+      - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: 🛠️ Setup Node.js (Phiên bản 2026)
-        uses: actions/setup-node@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload Artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          node-version: '22.x' # Sử dụng Node LTS ổn định của năm 2026
+          # Triển khai toàn bộ mã nguồn trong thư mục gốc
+          path: '.'
 
-      - name: 📦 Install Dependencies
-        run: npm install
-
-      - name: 🧪 Run Security Scan
-        run: npm audit fix --force
-
-      - name: 🏗️ Build Application
-        run: npm run build
-
-      - name: 🛰️ Deploy to Production
-        # Ở đây bạn có thể dùng Vercel, Netlify hoặc GitHub Pages
-        # Ví dụ deploy lên GitHub Pages:
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: dist # Thư mục chứa code đã build
-          branch: gh-pages
-
-      - name: 🔔 Sync Love Radar Status
-        # Bước này gửi thông báo giả lập về hệ thống để cập nhật "Trạm Vệ Tinh"
-        run: |
-          echo "📡 [RADAR] Hệ thống Vĩnh Long - TP.HCM đã cập nhật phiên bản mới nhất."
-          echo "✅ Deploy hoàn tất vào lúc: $(date)"
-
-      - name: 💖 Success Notification
-        if: success()
-        run: echo "🎉 Phiên bản 2026 đã sẵn sàng cho Cục Vàng!"
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+        
